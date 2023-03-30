@@ -11,3 +11,4 @@
 
 <img src="https://cdn.staticaly.com/gh/L-yume/Blog_GraphicBed@main/img/%E5%9E%83%E5%9C%BE%E5%88%86%E7%B1%BB%E5%B9%B3%E5%8F%B0.png" alt="垃圾分类平台" style="zoom: 50%;" />
 
+---
