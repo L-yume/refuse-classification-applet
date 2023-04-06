@@ -5,6 +5,10 @@
       <module fileurl="file://$PROJECT_DIR$/refuseClassification/refuse-classification-admin/refuse-classification-admin.iml" filepath="$PROJECT_DIR$/refuseClassification/refuse-classification-admin/refuse-classification-admin.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/refuse-classification-applet.iml" filepath="$PROJECT_DIR$/.idea/refuse-classification-applet.iml" />
       <module fileurl="file://$PROJECT_DIR$/refuseClassification/refuse-classification-bean/refuse-classification-bean.iml" filepath="$PROJECT_DIR$/refuseClassification/refuse-classification-bean/refuse-classification-bean.iml" />
+      <module fileurl="file://$PROJECT_DIR$/refuseClassification/refuse-classification-common/refuse-classification-common.iml" filepath="$PROJECT_DIR$/refuseClassification/refuse-classification-common/refuse-classification-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/refuseClassification/refuse-classification-security/refuse-classification-security.iml" filepath="$PROJECT_DIR$/refuseClassification/refuse-classification-security/refuse-classification-security.iml" />
+      <module fileurl="file://$PROJECT_DIR$/refuseClassification/refuse-classification-service/refuse-classification-service.iml" filepath="$PROJECT_DIR$/refuseClassification/refuse-classification-service/refuse-classification-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/refuseClassification/refuse-classification-system/refuse-classification-system.iml" filepath="$PROJECT_DIR$/refuseClassification/refuse-classification-system/refuse-classification-system.iml" />
       <module fileurl="file://$PROJECT_DIR$/refuseClassification/refuseClassification.iml" filepath="$PROJECT_DIR$/refuseClassification/refuseClassification.iml" />
     </modules>
   </component>

@@ -6,10 +6,15 @@
         <option value="$PROJECT_DIR$/refuseClassification/pom.xml" />
         <option value="$PROJECT_DIR$/refuseClassification/refuse-classification-admin/pom.xml" />
         <option value="$PROJECT_DIR$/refuseClassification/refuse-classification-bean/pom.xml" />
+        <option value="$PROJECT_DIR$/refuseClassification/refuse-classification-common/pom.xml" />
+        <option value="$PROJECT_DIR$/refuseClassification/refuse-classification-security/pom.xml" />
+        <option value="$PROJECT_DIR$/refuseClassification/refuse-classification-service/pom.xml" />
+        <option value="$PROJECT_DIR$/refuseClassification/refuse-classification-system/pom.xml" />
+        <option value="$PROJECT_DIR$/refuse-classification/refuse-classification-system/pom.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

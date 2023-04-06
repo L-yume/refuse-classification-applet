@@ -7,20 +7,31 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="refuse-classification-bean" />
+        <module name="refuse-classification-service" />
         <module name="refuse-classification-admin" />
-        <module name="refuseClassification" />
+        <module name="refuse-classification-common" />
+        <module name="refuse-classification-security" />
+        <module name="refuse-classification-system" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="refuse-classification-admin" target="1.8" />
       <module name="refuse-classification-bean" target="1.8" />
-      <module name="refuseClassification" target="1.5" />
+      <module name="refuse-classification-common" target="1.8" />
+      <module name="refuse-classification-security" target="1.8" />
+      <module name="refuse-classification-service" target="17" />
+      <module name="refuse-classification-system" target="1.8" />
+      <module name="refuseClassification" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="refuse-classification-admin" options="-parameters" />
-      <module name="refuse-classification-bean" options="-parameters" />
+      <module name="refuse-classification-admin" options="" />
+      <module name="refuse-classification-bean" options="" />
+      <module name="refuse-classification-common" options="" />
+      <module name="refuse-classification-security" options="" />
+      <module name="refuse-classification-service" options="-parameters" />
+      <module name="refuse-classification-system" options="" />
     </option>
   </component>
 </project>

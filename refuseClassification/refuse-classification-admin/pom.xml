@@ -3,29 +3,34 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.4</version>
+        <groupId>co.lvyi</groupId>
+        <artifactId>refuseClassification</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>co.lvyi</groupId>
     <artifactId>admin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>refuse-classification-admin</name>
     <description>refuse-classification-admin</description>
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
+
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <groupId>co.lvyi</groupId>
+            <artifactId>service</artifactId>
+            <version>${refuseClassificaton.version}</version>
         </dependency>
-
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>co.lvyi</groupId>
+            <artifactId>system</artifactId>
+            <version>${refuseClassificaton.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>co.lvyi</groupId>
+            <artifactId>security</artifactId>
+            <version>${refuseClassificaton.version}</version>
         </dependency>
     </dependencies>
 
@@ -34,7 +39,16 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal><!--可以把依赖的包都打包到生成的Jar包中-->
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
+
         </plugins>
     </build>
 
