@@ -12,6 +12,7 @@ import co.lvyi.bean.admin.dto.LoginDTO;
 import co.lvyi.common.constant.Constants;
 import co.lvyi.common.restful.JsonResult;
 import co.lvyi.security.service.SysLoginService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/admin")
 @Slf4j
+@Api(tags = "管理员登录功能")
 public class SysLoginController {
     @Autowired
     private SysLoginService sysLoginService;
