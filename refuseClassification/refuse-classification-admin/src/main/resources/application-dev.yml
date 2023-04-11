@@ -1,0 +1,44 @@
+my:
+  server:
+    addr: 47.106.188.177
+
+# 数据源配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${my.server.addr}:3306/refuse_classification?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: root
+
+# MyBatis配置
+mybatis:
+  # 搜索指定包别名
+  typeAliasesPackage: co.lvyi.**.entity
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:mapper/**/*Mapper.xml
+  # 加载全局的配置文件
+  configLocation: classpath:mybatis/mybatis-config.xml
+
+jwt:
+  # JWT存储的请求头
+  tokenHeader: Authorization
+  # JWT加解密使用的密钥
+  secret: mySecret
+  # JWT的超期限时间(60*60*24)
+  expiration: 604800
+  tokenHead: Bearer
+
+knife4j:
+  # 开启增强配置
+  enable: true
+  # 生产环境屏蔽，开启将禁止访问在线API文档
+  production: false
+  # Basic认证功能，即是否需要通过用户名、密码验证后才可以访问在线API文档
+  basic:
+    # 是否开启Basic认证
+    enable: false
+    # 用户名，如果开启Basic认证却未配置用户名与密码，默认是：admin/123321
+    username: root
+    # 密码
+    password: root

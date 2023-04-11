@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -19,7 +20,7 @@
       <module name="refuse-classification-bean" target="1.8" />
       <module name="refuse-classification-common" target="1.8" />
       <module name="refuse-classification-security" target="1.8" />
-      <module name="refuse-classification-service" target="17" />
+      <module name="refuse-classification-service" target="1.8" />
       <module name="refuse-classification-system" target="1.8" />
       <module name="refuseClassification" target="1.8" />
     </bytecodeTargetLevel>
@@ -30,7 +31,7 @@
       <module name="refuse-classification-bean" options="" />
       <module name="refuse-classification-common" options="" />
       <module name="refuse-classification-security" options="" />
-      <module name="refuse-classification-service" options="-parameters" />
+      <module name="refuse-classification-service" options="" />
       <module name="refuse-classification-system" options="" />
     </option>
   </component>

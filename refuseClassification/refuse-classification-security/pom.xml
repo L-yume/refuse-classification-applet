@@ -18,13 +18,46 @@
     <dependencies>
         <dependency>
             <groupId>co.lvyi</groupId>
+            <artifactId>common</artifactId>
+            <version>${refuseClassificaton.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>co.lvyi</groupId>
             <artifactId>service</artifactId>
             <version>${refuseClassificaton.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>co.lvyi</groupId>
+            <artifactId>system</artifactId>
+            <version>${refuseClassificaton.version}</version>
+        </dependency>
+        <!-- SpringBoot Web容器 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <!--security-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+
+        <!-- 获取系统信息 -->
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+        </dependency>
+        <!-- 验证码 -->
+        <dependency>
+            <groupId>pro.fessional</groupId>
+            <artifactId>kaptcha</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>javax.servlet-api</artifactId>
+                    <groupId>javax.servlet</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

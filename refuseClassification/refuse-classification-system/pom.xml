@@ -18,8 +18,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>co.lvyi</groupId>
-			<artifactId>security</artifactId>
+			<artifactId>bean</artifactId>
 			<version>${refuseClassificaton.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>co.lvyi</groupId>
+			<artifactId>common</artifactId>
 		</dependency>
 	</dependencies>
 </project>

@@ -23,10 +23,10 @@
         <refuseClassificaton.version>0.0.1-SNAPSHOT</refuseClassificaton.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <java.version>1.8</java.version>
         <spring-boot.version>2.7.0</spring-boot.version>
         <druid.version>1.2.16</druid.version>
+        <bitwalker.version>1.21</bitwalker.version>
         <log4j.version>2.14.1</log4j.version>
         <swagger.version>3.0.0</swagger.version>
         <oshi.version>6.4.0</oshi.version>
@@ -34,7 +34,12 @@
         <kaptcha.version>2.3.3</kaptcha.version>
         <jwt.version>0.9.1</jwt.version>
         <lombok.version>1.18.20</lombok.version>
+        <mybatis.version>2.2.0</mybatis.version>
         <mybatis-plus.version>3.1.0</mybatis-plus.version>
+        <knife4j.version>2.0.9</knife4j.version>
+        <mysql.version>8.0.26</mysql.version>
+        <redis.version>2.7.0</redis.version>
+        <fastjson.version>2.0.25</fastjson.version>
     </properties>
 
     <dependencyManagement>
@@ -53,6 +58,12 @@
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.version}</version>
             </dependency>
+            <!-- 解析客户端操作系统、浏览器等 -->
+            <dependency>
+                <groupId>eu.bitwalker</groupId>
+                <artifactId>UserAgentUtils</artifactId>
+                <version>${bitwalker.version}</version>
+            </dependency>
             <!-- pagehelper 分页插件 -->
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
@@ -65,18 +76,7 @@
                 <artifactId>oshi-core</artifactId>
                 <version>${oshi.version}</version>
             </dependency>
-            <!-- Swagger3依赖 -->
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-boot-starter</artifactId>
-                <version>${swagger.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>io.swagger</groupId>
-                        <artifactId>swagger-models</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
+
             <!-- Token生成与解析-->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
@@ -107,29 +107,74 @@
                 <version>${lombok.version}</version>
             </dependency>
 
+            <!-- MyBatis Spring Boot：数据访问层MyBatis编程 -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <!-- MySQL -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${redis.version}</version>
+            </dependency>
+            <!-- 阿里JSON解析器 -->
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>co.lvyi</groupId>
+                <artifactId>bean</artifactId>
+                <version>${refuseClassificaton.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>co.lvyi</groupId>
+                <artifactId>common</artifactId>
+                <version>${refuseClassificaton.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>co.lvyi</groupId>
+                <artifactId>security</artifactId>
+                <version>${refuseClassificaton.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>co.lvyi</groupId>
+                <artifactId>service</artifactId>
+                <version>${refuseClassificaton.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>co.lvyi</groupId>
+                <artifactId>system</artifactId>
+                <version>${refuseClassificaton.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+
     </dependencies>
 
     <build>
@@ -160,5 +205,19 @@
             </snapshots>
         </repository>
     </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>
