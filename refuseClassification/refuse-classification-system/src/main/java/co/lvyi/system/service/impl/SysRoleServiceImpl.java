@@ -9,10 +9,16 @@
 package co.lvyi.system.service.impl;
 
 import co.lvyi.bean.admin.entity.SysRole;
+import co.lvyi.common.utils.SpringUtils;
+import co.lvyi.common.utils.StringUtils;
 import co.lvyi.system.entity.SysUserRole;
+import co.lvyi.system.mapper.SysRoleMapper;
 import co.lvyi.system.service.ISysRoleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -21,35 +27,103 @@ import java.util.Set;
  */
 @Service
 public class SysRoleServiceImpl implements ISysRoleService {
+
+    @Autowired
+    public SysRoleMapper roleMapper;
+
+    /**
+     * 根据条件分页查询角色数据
+     *
+     * @param role 角色信息
+     * @return 角色数据集合信息
+     */
     @Override
-    public List<SysRole> selectRoleList(SysRole role) {
-        return null;
+    public List<SysRole> selectRoleList(SysRole role)
+    {
+        return roleMapper.selectRoleList(role);
     }
 
+    /**
+     * 根据用户ID查询角色
+     *
+     * @param userId 用户ID
+     * @return 角色列表
+     */
     @Override
-    public List<SysRole> selectRolesByUserId(Long userId) {
-        return null;
+    public List<SysRole> selectRolesByUserId(Long userId)
+    {
+        List<SysRole> userRoles = roleMapper.selectRolePermissionByUserId(userId);
+        List<SysRole> roles = selectRoleAll();
+        for (SysRole role : roles)
+        {
+            for (SysRole userRole : userRoles)
+            {
+                if (role.getRoleId().longValue() == userRole.getRoleId().longValue())
+                {
+                    role.setFlag(true);
+                    break;
+                }
+            }
+        }
+        return roles;
     }
 
+    /**
+     * 根据用户ID查询权限
+     *
+     * @param userId 用户ID
+     * @return 权限列表
+     */
     @Override
-    public Set<String> selectRolePermissionByUserId(Long userId) {
-        return null;
+    public Set<String> selectRolePermissionByUserId(Long userId)
+    {
+        List<SysRole> perms = roleMapper.selectRolePermissionByUserId(userId);
+        Set<String> permsSet = new HashSet<>();
+        for (SysRole perm : perms)
+        {
+            if (StringUtils.isNotNull(perm))
+            {
+                permsSet.addAll(Arrays.asList(perm.getRoleKey().trim().split(",")));
+            }
+        }
+        return permsSet;
     }
 
+    /**
+     * 查询所有角色
+     *
+     * @return 角色列表
+     */
     @Override
-    public List<SysRole> selectRoleAll() {
-        return null;
+    public List<SysRole> selectRoleAll()
+    {
+        return SpringUtils.getAopProxy(this).selectRoleList(new SysRole());
     }
 
+    /**
+     * 根据用户ID获取角色选择框列表
+     *
+     * @param userId 用户ID
+     * @return 选中角色ID列表
+     */
     @Override
-    public List<Long> selectRoleListByUserId(Long userId) {
-        return null;
+    public List<Long> selectRoleListByUserId(Long userId)
+    {
+        return roleMapper.selectRoleListByUserId(userId);
     }
 
+    /**
+     * 通过角色ID查询角色
+     *
+     * @param roleId 角色ID
+     * @return 角色对象信息
+     */
     @Override
-    public SysRole selectRoleById(Long roleId) {
-        return null;
+    public SysRole selectRoleById(Long roleId)
+    {
+        return roleMapper.selectRoleById(roleId);
     }
+
 
     @Override
     public boolean checkRoleNameUnique(SysRole role) {

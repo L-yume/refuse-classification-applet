@@ -33,6 +33,7 @@ public class SysLoginController {
 
     @PostMapping("/login")
     public JsonResult login(@RequestBody LoginDTO loginDTO){
+        log.info("开始执行登录操作...");
         JsonResult result = JsonResult.success();
         //生成令牌
         String token = sysLoginService.login(loginDTO.getUsername(), loginDTO.getPassword(),

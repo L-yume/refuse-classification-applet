@@ -6,7 +6,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <resultMap type="co.lvyi.bean.admin.entity.SysUser" id="SysUserResult">
         <id     property="userId"       column="user_id"      />
-        <result property="deptId"       column="dept_id"      />
         <result property="userName"     column="user_name"    />
         <result property="nickName"     column="nick_name"    />
         <result property="email"        column="email"        />
