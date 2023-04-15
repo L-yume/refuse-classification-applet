@@ -13,9 +13,9 @@
     "element-ui": "^2.15.13",
     "fuse.js": "^6.6.2",
     "js-cookie": "^3.0.1",
+    "screenfull": "5.0.2",
     "jsencrypt": "^3.3.2",
     "path-browserify": "^1.0.1",
-    "screenfull": "^6.0.2",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"
@@ -32,6 +32,7 @@
     "eslint-plugin-vue": "^8.0.3",
     "sass": "^1.60.0",
     "sass-loader": "^13.2.2",
-    "vue-template-compiler": "^2.6.14"
+    "vue-template-compiler": "^2.6.14",
+    "svg-sprite-loader": "5.1.1"
   }
 }

@@ -56,7 +56,7 @@
     </el-form>
     <!--  底部  -->
     <div class="el-login-footer">
-      <span>Copyright © 2023.3 - 2023.6  By 紫依.</span>
+      <span>Copyright © 2023.3 - 2023.6  By 吕易.</span>
     </div>
   </div>
 </template>
@@ -128,6 +128,7 @@ export default {
       };
     },
     handleLogin() {
+      console.log('开始登录...')
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
@@ -140,6 +141,7 @@ export default {
             Cookies.remove("password");
             Cookies.remove('rememberMe');
           }
+          console.log('是否记住密码...')
           this.$store.dispatch("Login", this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || "/" }).catch(()=>{});
           }).catch(() => {
