@@ -20,6 +20,7 @@
 <script>
 import RightPanel from '@/components/RightPanel'
 import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
+import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
 import variables from '@/assets/styles/variables.scss'
 
@@ -33,6 +34,7 @@ export default {
     Sidebar,
     TagsView
   },
+  mixins: [ResizeMixin],
   computed: {
     ...mapState({
       theme: state => state.settings.theme,

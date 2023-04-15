@@ -39,6 +39,11 @@ export const constantRoutes = [
   },
 ]
 
+// 动态路由，基于用户权限动态去加载
+export const dynamicRoutes = [
+  
+]
+
 // 防止连续点击多次路由报错
 let routerPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location) {
