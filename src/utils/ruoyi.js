@@ -148,7 +148,7 @@ export function mergeRecursive(source, target) {
     }
   }
   return source;
-}
+};
 
 /**
  * 构造树型结构数据

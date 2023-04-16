@@ -27,7 +27,7 @@ import variables from '@/assets/styles/variables.scss'
 export default {
   name: 'Layout',
   components: {
-    AppMain, 
+    AppMain,
     Navbar,
     RightPanel,
     Settings,

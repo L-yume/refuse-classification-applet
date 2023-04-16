@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
     <theme-picker />
   </div>
 </template>
@@ -11,7 +11,7 @@ import ThemePicker from "@/components/ThemePicker";
 export default {
   name: "App",
   components: { ThemePicker },
-  metaInfo() {
+    metaInfo() {
         return {
             title: this.$store.state.settings.dynamicTitle && this.$store.state.settings.title,
             titleTemplate: title => {
@@ -21,8 +21,7 @@ export default {
     }
 };
 </script>
-
-<style scope>
+<style scoped>
 #app .theme-picker {
   display: none;
 }

@@ -8,7 +8,8 @@
     <div class="right-menu">
       <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
-        
+
+
 
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
