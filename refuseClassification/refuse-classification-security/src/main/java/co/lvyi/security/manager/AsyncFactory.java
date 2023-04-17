@@ -1,11 +1,7 @@
 package co.lvyi.security.manager;
 
 import co.lvyi.common.constant.Constants;
-import co.lvyi.common.utils.LogUtils;
-import co.lvyi.common.utils.ServletUtils;
-import co.lvyi.common.utils.StringUtils;
-import co.lvyi.common.utils.IpUtils;
-import co.lvyi.common.utils.SpringUtils;
+import co.lvyi.common.utils.*;
 import co.lvyi.system.entity.SysLogininfor;
 import co.lvyi.system.entity.SysOperLog;
 import co.lvyi.system.service.ISysLogininforService;
@@ -44,8 +40,10 @@ public class AsyncFactory
             @Override
             public void run()
             {
+                String address = AddressUtils.getRealAddressByIP(ip);
                 StringBuilder s = new StringBuilder();
                 s.append(LogUtils.getBlock(ip));
+                s.append(address);
                 s.append(LogUtils.getBlock(username));
                 s.append(LogUtils.getBlock(status));
                 s.append(LogUtils.getBlock(message));

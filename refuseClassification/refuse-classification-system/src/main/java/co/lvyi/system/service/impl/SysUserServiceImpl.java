@@ -8,15 +8,20 @@
  */
 package co.lvyi.system.service.impl;
 
+import co.lvyi.bean.admin.entity.SysRole;
 import co.lvyi.bean.admin.entity.SysUser;
+import co.lvyi.common.utils.StringUtils;
+import co.lvyi.system.mapper.SysRoleMapper;
 import co.lvyi.system.mapper.SysUserMapper;
 import co.lvyi.system.service.ISysUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 用户 业务层处理
@@ -28,6 +33,9 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Autowired
     public SysUserMapper userMapper;
+
+    @Autowired
+    public SysRoleMapper roleMapper;
 
     /**
      * 根据条件分页查询用户列表
@@ -77,7 +85,12 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Override
     public String selectUserRoleGroup(String userName) {
-        return null;
+        List<SysRole> list = roleMapper.selectRolesByUserName(userName);
+        if (CollectionUtils.isEmpty(list))
+        {
+            return StringUtils.EMPTY;
+        }
+        return list.stream().map(SysRole::getRoleName).collect(Collectors.joining(","));
     }
 
     @Override
