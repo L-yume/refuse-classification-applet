@@ -85,16 +85,7 @@
           v-hasPermi="['monitor:logininfor:unlock']"
         >解锁</el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['monitor:logininfor:export']"
-        >导出</el-button>
-      </el-col>
+
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -173,6 +164,7 @@ export default {
   methods: {
     /** 查询登录日志列表 */
     getList() {
+      console.log('查询登录日志...')
       this.loading = true;
       list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
           this.list = response.rows;
@@ -234,12 +226,7 @@ export default {
         this.$modal.msgSuccess("用户" + username + "解锁成功");
       }).catch(() => {});
     },
-    /** 导出按钮操作 */
-    handleExport() {
-      this.download('monitor/logininfor/export', {
-        ...this.queryParams
-      }, `logininfor_${new Date().getTime()}.xlsx`)
-    }
+
   }
 };
 </script>

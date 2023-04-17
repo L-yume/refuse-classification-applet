@@ -23,10 +23,7 @@
                 <svg-icon icon-class="email" />用户邮箱
                 <div class="pull-right">{{ user.email }}</div>
               </li>
-              <li class="list-group-item">
-                <svg-icon icon-class="tree" />所属部门
-                <div class="pull-right" v-if="user.dept">{{ user.dept.deptName }} / {{ postGroup }}</div>
-              </li>
+
               <li class="list-group-item">
                 <svg-icon icon-class="peoples" />所属角色
                 <div class="pull-right">{{ roleGroup }}</div>
@@ -71,7 +68,6 @@ export default {
     return {
       user: {},
       roleGroup: {},
-      postGroup: {},
       activeTab: "userinfo"
     };
   },
@@ -83,7 +79,6 @@ export default {
       getUserProfile().then(response => {
         this.user = response.data;
         this.roleGroup = response.roleGroup;
-        this.postGroup = response.postGroup;
       });
     }
   }

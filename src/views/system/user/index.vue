@@ -269,7 +269,6 @@
 
 <script>
 import { listUser, getUser, delUser, addUser, updateUser, resetUserPwd, changeUserStatus, deptTreeSelect } from "@/api/system/user";
-import { getToken } from "@/utils/auth";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
@@ -388,12 +387,7 @@ export default {
         }
       );
     },
-    /** 查询部门下拉树结构 */
-    /*getDeptTree() {
-      deptTreeSelect().then(response => {
-        this.deptOptions = response.data;
-      });
-    },*/
+
     // 筛选节点
     filterNode(value, data) {
       if (!value) return true;
@@ -547,27 +541,6 @@ export default {
     },
 
 
-    /** 下载模板操作 */
-    importTemplate() {
-      this.download('system/user/importTemplate', {
-      }, `user_template_${new Date().getTime()}.xlsx`)
-    },
-    // 文件上传中处理
-    handleFileUploadProgress(event, file, fileList) {
-      this.upload.isUploading = true;
-    },
-    // 文件上传成功处理
-    handleFileSuccess(response, file, fileList) {
-      this.upload.open = false;
-      this.upload.isUploading = false;
-      this.$refs.upload.clearFiles();
-      this.$alert("<div style='overflow: auto;overflow-x: hidden;max-height: 70vh;padding: 10px 20px 0;'>" + response.msg + "</div>", "导入结果", { dangerouslyUseHTMLString: true });
-      this.getList();
-    },
-    // 提交上传文件
-    submitFileForm() {
-      this.$refs.upload.submit();
-    }
   }
 };
 </script>
