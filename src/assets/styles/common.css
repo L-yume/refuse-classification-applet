@@ -1,0 +1,136 @@
+html,
+body,
+#app,
+.el-container {
+  height: 100%;
+  overflow: auto;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 650px;
+  min-width: 650px;
+}
+
+#app .el-textarea__inner {
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+
+.app-container {
+  height: 100%;
+}
+
+.flex-row {
+  display: flex;
+}
+
+.flex-auto-item {
+  flex-grow: 1;
+}
+
+.flex-fixed-item {
+  flex-shrink: 0;
+}
+
+.flex-row-ver-center {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+/* 一些公用样式 */
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+.clear {
+  clear: both;
+}
+
+.per100input {
+  display: inline-block;
+  width: 100%;
+}
+
+.red-tip {
+  font-size: 12px;
+  color: #ff0000;
+}
+
+/* 一些公用样式结束 */
+.styleof-inlineblock {
+  display: inline-block;
+  vertical-align: top;
+  box-sizing: border-box;
+}
+
+.flex-container {
+  display: flex;
+  box-sizing: border-box;
+}
+
+/* 修复elementui全局遮罩在有滚动条时候的问题 */
+#app .el-loading-mask {
+  position: fixed;
+}
+
+/* 指定表格溢出内容弹出框显示的最大宽度 */
+.el-tooltip__popper {
+  max-width: 800px;
+}
+
+/* placeholder样式定义 */
+/* #app input::input-placeholder {
+  color: #666;
+}
+
+#app input::-webkit-input-placeholder {
+  color: #666;
+}
+
+#app input:-ms-input-placeholder {
+  color: #666;
+}
+
+#app input:-moz-placeholder {
+  color: #666;
+}
+
+#app input::-moz-placeholder {
+  color: #666;
+}
+
+#app input:focus::-webkit-input-placeholder {
+  color: #666;
+}
+
+#app input:focus::-moz-input-placeholder {
+  color: #666;
+} */
+
+/* placeholder样式定义结束 */
+
+/* 定义icon图标默认大小 */
+.more-icon {
+  font-size: 14px;
+}
+
+i[class^="el-icon-"].more-icon {
+  vertical-align: middle;
+  margin-right: 5px;
+  width: 24px;
+  text-align: center;
+  font-size: 18px;
+}

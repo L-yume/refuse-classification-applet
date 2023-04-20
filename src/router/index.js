@@ -120,6 +120,20 @@ export const dynamicRoutes = [
       }
     ]
   },
+  {
+    path: '/uniapp',
+    component: Layout,
+    hidden: true,
+    permissions: ['uniapp:article:edit'],
+    children: [
+      {
+        path: 'article-edit',
+        component: () => import('@/views/uniapp/article-editing'),
+        name: 'ArticleEditing',
+        meta: { title: '编辑文章'}
+      }
+    ]
+  },
 
   {
     path: '/tool/gen-edit',
