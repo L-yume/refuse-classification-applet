@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.lvyi.system.mapper.ArticleMapper">
+
+    <resultMap id="ArticleResultMap" type="co.lvyi.bean.admin.vo.ArticleVO">
+        <id column="article_id" property="articleId"/>
+        <result column="title" property="title"/>
+        <result column="reprinted_from" property="reprintedFrom"/>
+        <result column="status" property="status"/>
+        <result column="content" property="content"/>
+        <result column="attribute" property="attribute" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
+        <result column="created_time" property="createdTime"/>
+        <result column="updated_time" property="updatedTime"/>
+    </resultMap>
+    
+    <select id="findByPage" resultMap="ArticleResultMap">
+        select article_id, title, status, reprinted_from, content, attribute, created_time, updated_time from articles
+    </select>
+
+    <select id="selectArticleList" resultMap="ArticleResultMap">
+        select article_id, title, status, reprinted_from, content, attribute, created_time, updated_time from articles
+    </select>
+</mapper>

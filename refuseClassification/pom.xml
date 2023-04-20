@@ -35,7 +35,7 @@
         <jwt.version>0.9.1</jwt.version>
         <lombok.version>1.18.20</lombok.version>
         <mybatis.version>2.2.0</mybatis.version>
-        <mybatis-plus.version>3.1.0</mybatis-plus.version>
+        <mybatis-plus.version>3.4.2</mybatis-plus.version>
         <knife4j.version>2.0.9</knife4j.version>
         <mysql.version>8.0.26</mysql.version>
         <redis.version>2.7.0</redis.version>
@@ -107,17 +107,37 @@
                 <version>${lombok.version}</version>
             </dependency>
 
-            <!-- MyBatis Spring Boot：数据访问层MyBatis编程 -->
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${mybatis.version}</version>
-            </dependency>
 
+
+            <!-- mybatis-plus begin -->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.jeffreyning</groupId>
+                <artifactId>mybatisplus-plus</artifactId>
+                <version>1.6.0-RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>3.4.1</version>
+            </dependency>
+            <!-- mybatis-plus end -->
+
+            <!--MyBatis-Plus 模板引擎-->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>2.3</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>commons-lang3</artifactId>
+                        <groupId>org.apache.commons</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>

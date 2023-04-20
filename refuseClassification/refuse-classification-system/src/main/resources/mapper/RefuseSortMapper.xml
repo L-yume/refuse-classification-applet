@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.lvyi.system.mapper.RefuseSortMapper">
+
+    <resultMap id="RefuseSortResult" type="RefuseSort">
+        <id     property="sortId"     column="sort_id" />
+        <result property="refuseType" column="refuse_type"/>
+        <result property="description" column="description"/>
+        <result property="createTime"   column="create_time"  />
+        <result property="updateTime"   column="update_time"  />
+    </resultMap>
+
+    <select id="selectSortList" parameterType="RefuseSort" resultMap="RefuseSortResult">
+        select sort_id, refuse_type, description, create_time from sort
+    </select>
+</mapper>
