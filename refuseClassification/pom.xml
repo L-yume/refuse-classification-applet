@@ -40,6 +40,7 @@
         <mysql.version>8.0.26</mysql.version>
         <redis.version>2.7.0</redis.version>
         <fastjson.version>2.0.25</fastjson.version>
+        <aliyun-oss.version>3.10.2</aliyun-oss.version>
     </properties>
 
     <dependencyManagement>
@@ -107,7 +108,11 @@
                 <version>${lombok.version}</version>
             </dependency>
 
-
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun-oss.version}</version>
+            </dependency>
 
             <!-- mybatis-plus begin -->
             <dependency>

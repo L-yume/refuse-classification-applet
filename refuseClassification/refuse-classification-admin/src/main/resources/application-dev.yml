@@ -42,3 +42,20 @@ knife4j:
     username: root
     # 密码
     password: root
+
+# oss
+aliyun:
+  oss:
+    # oss对外服务的访问域名
+    endpoint: oss-cn-shenzhen.aliyuncs.com
+    # 访问身份验证中用到用户标识
+    accessKeyId: LTAI5t8jihSDUCYrrMqgEX5D
+    # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
+    accessKeySecret: 2wo5VCFNm5qqkV2LgCp1S9wpGGlnvl
+    # oss的存储空间
+    bucketName: test-oss-2023-3-19
+    # 上传文件大小(M)
+    maxSize: 3
+    # 上传文件夹路径前缀
+    dir:
+      prefix: refuseClassification/images/
