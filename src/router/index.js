@@ -131,6 +131,12 @@ export const dynamicRoutes = [
         component: () => import('@/views/uniapp/article-editing'),
         name: 'ArticleEditing',
         meta: { title: '编辑文章'}
+      },
+      {
+        path: 'article-modify',
+        component: () => import('@/views/uniapp/article-editing'),
+        name: 'ArricleModify',
+        meta: {title: '修改文章'}
       }
     ]
   },

@@ -26,7 +26,7 @@
     <div class="table-container">
       <el-table ref="multipleTable" height="calc(100% - 10px)" :key="tableAbout.tableKey" :data="tableAbout.tableData" border fit highlight-current-row class="normal-table" @selection-change="handleSelectionChange">
         <!-- <el-table-column align="center" class-name="recorrect-center" type="selection" width="55px" /> -->
-        <el-table-column label="编号" prop="postsId" width="80px" align="center" />
+        <el-table-column label="编号" prop="articleId" width="80px" align="center" />
         <el-table-column label="封面图" width="80px" align="center" class-name="article-cover-col">
           <template slot-scope="{row}">
             <el-popover v-if="row.attribute && row.attribute.articleCoverUrl" placement="right" trigger="hover">
@@ -36,22 +36,22 @@
             <el-image v-else :src="defaultArticleCoverSrc" fit="fill"></el-image>
           </template>
         </el-table-column>
-        <el-table-column label="标题" prop="postTitle">
+        <el-table-column label="标题" prop="title">
           <template slot-scope="{row}">
             <img :src="onTopImageSrc" class="icon-ontop" v-if="row.menuOrder !== 0" />
-            <el-link type="primary" @click="handleUpdate(row)">{{row.postTitle}}</el-link>
+            <el-link type="primary" @click="handleUpdate(row)">{{row.title}}</el-link>
           </template>
         </el-table-column>
         <!-- <el-table-column label="摘要" prop="postExcerpt" width="200px" show-overflow-tooltip /> -->
-        <el-table-column label="作者" prop="userNiceName" width="100px" align="center" />
-        <el-table-column label="操作/发布时间" prop="postDate" width="155px" align="center">
+        <el-table-column label="转载自" prop="reprintedFrom" width="100px" align="center" />
+        <el-table-column label="操作/发布时间" prop="createdTime" width="155px" align="center">
           <template slot-scope="{row}">
-            {{row.postDate ? row.postDate.substr(0,16) : row.postModified.substr(0,16) }}
+            {{ parseTime(row.createdTime ? row.createdTime.toString().substr(0,16) : row.updatedTime.toString().substr(0,16)) }}
           </template>
         </el-table-column>
-        <el-table-column label="状态" prop="postStatus" width="80px" :formatter="statusFilter" align="center">
+        <el-table-column label="状态" prop="status" width="80px" :formatter="statusFilter" align="center">
           <template slot-scope="{row}">
-            <el-tag :type="row.postStatus == 'DRAFT' ? 'info': 'success'">
+            <el-tag :type="row.status == 'DRAFT' ? 'info': 'success'">
               {{ statusFilter(row) }}
             </el-tag>
           </template>
@@ -133,15 +133,13 @@ export default {
 
       // 页面用来编辑的数据模型
       editDataModel: {
-        postsId: undefined,
-        postTitle: '', // 标题
-        postDate: '', // 发布时间
-        postContent: '', // 正文
-        postExcerpt: '', // 摘要
+        articleId: undefined,
+        title: '', // 标题
+        createdTime: '', // 发布时间
+        content: '', // 正文
         menuOrder: '', // 排序号
         postType: 'POST', // 文章类型
-        postStatus: 'DRAFT', // 文章状态
-        termTaxonomyId: '', // 所属栏目id
+        status: 'DRAFT', // 文章状态
         attribute: '', // 属性
         tags: '' // 标签
       },
@@ -259,7 +257,7 @@ export default {
     // 状态翻译
     statusFilter(row) {
       let statusText = ''
-      const filterArr = this.statusList.filter(item => item.value === row.postStatus)
+      const filterArr = this.statusList.filter(item => item.value === row.status)
       if (filterArr.length > 0) {
         statusText = filterArr[0].label
       }
@@ -276,7 +274,7 @@ export default {
     getList() {
       // this.tableAbout.listQuery.total = 0
       getArticlePagedList(this.tableAbout.listQuery).then(res => {
-        this.tableAbout.tableData = res.items
+        this.tableAbout.tableData = res.rows
         this.tableAbout.listQuery.total = res.total
         console.log('查询列表后表格变量', this.tableAbout)
       })
@@ -324,7 +322,7 @@ export default {
     handleUpdate(row) {
       // this.openEditPage(row.postsId)
       // this.$router.push(`/content/article-editing?aid=${row.postsId}`)
-      this.$router.push(`/content/article-modify?aid=${row.postsId}`)
+      this.$router.push(`/uniapp/article-modify?aid=${row.articleId}`)
     },
     // 行删除按钮处理
     handleDelete(row, index) {
