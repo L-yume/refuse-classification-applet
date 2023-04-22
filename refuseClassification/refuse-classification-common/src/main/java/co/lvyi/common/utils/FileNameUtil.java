@@ -12,7 +12,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.UUID;
 
 public class FileNameUtil {
-    private static final String[] imageExtension = {".jpg", ".jpeg", ".png", ".gif"};
+    private static final String[] imageExtension = {".jpg", ".jpeg", ".png", ".gif",".mp4"};
 
     public static String getImgName(String url) {
         String ext = "";

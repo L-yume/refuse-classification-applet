@@ -26,5 +26,11 @@ public class OssController {
     public ResultObject<String> uploadImg(@RequestParam("file") MultipartFile file) {
         return ResultObject.success(ossService.upload(file));
     }
+
+    @PostMapping("/video/upload")
+    @ResponseBody
+    public ResultObject<String> uploadVideo(@RequestParam("file") MultipartFile file) {
+        return ResultObject.success(ossService.uploadVideo(file));
+    }
 }
 
