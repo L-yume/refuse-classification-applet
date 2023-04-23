@@ -21,7 +21,7 @@ public class Video extends BaseEntity{
     private String duration;
     private String videoSize;
     private String videoFormat;
-    private boolean status;
+    private String status;
 
 }
 

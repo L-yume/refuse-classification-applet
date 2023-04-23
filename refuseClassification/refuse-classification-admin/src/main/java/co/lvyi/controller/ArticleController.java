@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/system/article")
+@RequestMapping("/uniapp/article")
 @Slf4j
 public class ArticleController extends BaseController {
 
