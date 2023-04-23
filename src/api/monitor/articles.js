@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询文章分页列表的方法
 export function getArticlePagedList(params) {
   return request({
-    url: `/system/article/list2?_=${Math.random()}`,
+    url: `/uniapp/article/list2?_=${Math.random()}`,
     method: 'get',
     params
   })

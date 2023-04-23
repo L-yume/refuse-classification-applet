@@ -1,39 +1,16 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch">
-      <el-form-item label="角色名称" prop="roleName">
+      <el-form-item label="视频标题" prop="roleName">
         <el-input
           v-model="queryParams.roleName"
-          placeholder="请输入角色名称"
+          placeholder="请输入视频标题"
           clearable
           style="width: 240px"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="权限字符" prop="roleKey">
-        <el-input
-          v-model="queryParams.roleKey"
-          placeholder="请输入权限字符"
-          clearable
-          style="width: 240px"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select
-          v-model="queryParams.status"
-          placeholder="角色状态"
-          clearable
-          style="width: 240px"
-        >
-          <el-option
-            v-for="dict in dict.type.sys_normal_disable"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
-        </el-select>
-      </el-form-item>
+
       <el-form-item label="创建时间">
         <el-date-picker
           v-model="dateRange"
@@ -88,13 +65,25 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="roleList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="videoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="角色编号" prop="roleId" width="120" />
-      <el-table-column label="角色名称" prop="roleName" :show-overflow-tooltip="true" width="150" />
-      <el-table-column label="权限字符" prop="roleKey" :show-overflow-tooltip="true" width="150" />
-      <el-table-column label="显示顺序" prop="roleSort" width="100" />
-      <el-table-column label="状态" align="center" width="100">
+      <el-table-column label="视频编号" prop="videoId" width="120" />
+      <el-table-column label="视频标题" prop="name" :show-overflow-tooltip="true" width="150" />
+      <el-table-column label="时长" prop="duration" :show-overflow-tooltip="true" width="150" />
+      <el-table-column label="视频大小" prop="videoSize" width="100" />
+      <el-table-column label="视频" align="center" width="100">
+        <template slot-scope="scope">
+          <el-button
+            type="success"
+            size="small"
+            icon="el-icon-caret-left"
+            round
+            @click="playVideo(scope.row.title, scope.row.path)"
+          >播放
+          </el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="状态" align="status" width="150">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -125,14 +114,7 @@
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:role:remove']"
           >删除</el-button>
-          <el-dropdown size="mini" @command="(command) => handleCommand(command, scope.row)" v-hasPermi="['system:role:edit']">
-            <el-button size="mini" type="text" icon="el-icon-d-arrow-right">更多</el-button>
-            <el-dropdown-menu slot="dropdown">
 
-              <el-dropdown-item command="handleAuthUser" icon="el-icon-user"
-                v-hasPermi="['system:role:edit']">分配用户</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
         </template>
       </el-table-column>
     </el-table>
@@ -144,6 +126,16 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
+
+    <el-dialog :title="videoTitle" :visible.sync="openVideo" width="500px" append-to-body>
+      <video
+        :src="videoPath"
+        controls
+        autoplay
+        ref="dialogVideo"
+        width="100%"
+      />
+    </el-dialog>
 
     <!-- 添加或修改角色配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
@@ -203,6 +195,7 @@
 <script>
 import { listRole, getRole, delRole, addRole, updateRole, dataScope, changeRoleStatus, deptTreeSelect } from "@/api/system/role";
 import { treeselect as menuTreeselect, roleMenuTreeselect } from "@/api/system/menu";
+import {listVideo} from "@/api/monitor/video";
 
 export default {
   name: "Role",
@@ -222,11 +215,14 @@ export default {
       // 总条数
       total: 0,
       // 角色表格数据
-      roleList: [],
+      videoList: [],
+      videoPath: "",
       // 弹出层标题
       title: "",
+      videoTitle: "",
       // 是否显示弹出层
       open: false,
+      openVideo: false,
       // 是否显示弹出层（数据权限）
       openDataScope: false,
       menuExpand: false,
@@ -297,8 +293,9 @@ export default {
     /** 查询角色列表 */
     getList() {
       this.loading = true;
-      listRole(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-          this.roleList = response.rows;
+      listVideo(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+          console.log(response.rows)
+          this.videoList = response.rows;
           this.total = response.total;
           this.loading = false;
         }
@@ -369,21 +366,21 @@ export default {
         this.$refs.menu.setCheckedKeys([]);
       }
       this.menuExpand = false,
-      this.menuNodeAll = false,
-      this.deptExpand = true,
-      this.deptNodeAll = false,
-      this.form = {
-        roleId: undefined,
-        roleName: undefined,
-        roleKey: undefined,
-        roleSort: 0,
-        status: "0",
-        menuIds: [],
-        deptIds: [],
-        menuCheckStrictly: true,
-        deptCheckStrictly: true,
-        remark: undefined
-      };
+        this.menuNodeAll = false,
+        this.deptExpand = true,
+        this.deptNodeAll = false,
+        this.form = {
+          roleId: undefined,
+          roleName: undefined,
+          roleKey: undefined,
+          roleSort: 0,
+          status: "0",
+          menuIds: [],
+          deptIds: [],
+          menuCheckStrictly: true,
+          deptCheckStrictly: true,
+          remark: undefined
+        };
       this.resetForm("form");
     },
     /** 搜索按钮操作 */
@@ -415,6 +412,11 @@ export default {
         default:
           break;
       }
+    },
+    playVideo(title, path) {
+      this.videoTitle = title;
+      this.videoPath = path;
+      this.openVideo = true;
     },
 
     // 树权限（展开/折叠）
@@ -467,9 +469,9 @@ export default {
           roleMenu.then(res => {
             let checkedKeys = res.checkedKeys
             checkedKeys.forEach((v) => {
-                this.$nextTick(()=>{
-                    this.$refs.menu.setChecked(v, true ,false);
-                })
+              this.$nextTick(()=>{
+                this.$refs.menu.setChecked(v, true ,false);
+              })
             })
           });
         });
