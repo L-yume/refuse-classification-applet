@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.lvyi.system.mapper.QuestionMapper">
+
+    <resultMap id="QuestionResultMap" type="Question">
+        <id property="questionId" column="question_id"/>
+        <result property="question" column="question"/>
+        <result property="answerA" column="answer_a"/>
+        <result property="answerB" column="answer_b"/>
+        <result property="answerC" column="answer_c"/>
+        <result property="answerD" column="answer_d"/>
+        <result property="correctAnswer" column="correct_answer"/>
+        <result property="createTime"   column="create_time"  />
+        <result property="updateTime"   column="update_time"  />
+    </resultMap>
+
+    <select id="selectQuestionList" resultMap="QuestionResultMap">
+        select question_id, question, answer_a, answer_b, answer_c, answer_d, correct_answer, create_time, update_time
+        from question
+    </select>
+</mapper>
