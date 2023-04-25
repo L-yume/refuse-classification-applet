@@ -12,7 +12,7 @@ export function getArticlePagedList(params) {
 // 根据id查询文章详情的方法
 export function getArticleById(params) {
   return request({
-    url: `/posts/getById?_=${Math.random()}`,
+    url: `/uniapp/article/getById`,
     method: 'get',
     params
   })

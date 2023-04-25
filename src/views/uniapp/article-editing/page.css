@@ -30,7 +30,9 @@
 }
 
 .article-edit-form .el-form-item.mb-8{
-  margin-bottom: 8px;
+  margin-top: 3px;
+  margin-bottom: 5px;
+  margin-left: 5px;
 }
 
 .article-edit-form .el-input__inner{

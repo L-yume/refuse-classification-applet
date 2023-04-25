@@ -10,7 +10,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['system:user:add']"
+          v-hasPermi="['uniapp:sort:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -21,7 +21,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['system:user:edit']"
+          v-hasPermi="['uniapp:sort:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -32,7 +32,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['system:user:remove']"
+          v-hasPermi="['uniapp:sort:remove']"
         >删除</el-button>
       </el-col>
 
@@ -56,20 +56,20 @@
         width="160"
         class-name="small-padding fixed-width"
       >
-        <template slot-scope="scope" v-if="scope.row.userId !== 1">
+        <template slot-scope="scope" >
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:user:edit']"
+            v-hasPermi="['uniapp:sort:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['system:user:remove']"
+            v-hasPermi="['uniapp:sort:remove']"
           >删除</el-button>
 
         </template>
@@ -84,11 +84,31 @@
       @pagination="getList"
     />
 
+    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="类别名称" prop="refuseType">
+          <el-input v-model="form.refuseType" placeholder="请输入类别名称" />
+        </el-form-item>
+        <el-form-item label="描述">
+          <el-input v-model="form.description" type="textarea" placeholder="请输入内容"></el-input>
+        </el-form-item>
+
+        <el-form-item label="备注">
+          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+
+
   </div>
 </template>
 
 <script>
-import {list, getUser, delUser} from "@/api/monitor/sort";
+import {list, getSort, updateSort, addSort} from "@/api/monitor/sort";
 
 export default {
   name: "index",
@@ -105,6 +125,9 @@ export default {
       // 显示搜索条件
       showSearch: true,
       total: 0,
+      title: '',
+      // 是否显示弹出层
+      open: false,
 
       // 查询参数
       queryParams: {
@@ -112,6 +135,8 @@ export default {
         pageSize: 10,
         refuseType: undefined,
       },
+      // 表单参数
+      form: {},
 
       // 列信息
       columns: [
@@ -120,6 +145,13 @@ export default {
         { key: 2, label: `描述`, visible: true },
         { key: 3, label: `创建时间`, visible: true },
       ],
+      // 表单校验
+      rules: {
+        refuseType: [
+          { required: true, message: "垃圾名称不能为空", trigger: "blur" }
+        ],
+
+      }
     }
   },
   created() {
@@ -139,26 +171,18 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
-      getUser().then(response => {
-        this.postOptions = response.posts;
-        this.roleOptions = response.roles;
-        this.open = true;
-        this.title = "添加用户";
-        this.form.password = this.initPassword;
-      });
+      this.open = true
+      this.title = '添加垃圾分类'
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      const userId = row.userId || this.ids;
-      getUser(userId).then(response => {
+      const sortId = row.sortId || this.ids;
+      getSort(sortId).then(response => {
         this.form = response.data;
-        this.postOptions = response.posts;
-        this.roleOptions = response.roles;
-        this.$set(this.form, "postIds", response.postIds);
-        this.$set(this.form, "roleIds", response.roleIds);
+        this.$set(this.form, "sortIds", response.roleIds);
         this.open = true;
-        this.title = "修改用户";
-        this.form.password = "";
+        this.title = "修改分类";
+
       });
     },
     /** 删除按钮操作 */
@@ -176,6 +200,32 @@ export default {
       this.ids = selection.map(item => item.userId);
       this.single = selection.length != 1;
       this.multiple = !selection.length;
+    },
+    submitForm: function () {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          if (this.form.sortId != undefined) {
+
+            updateSort(this.form).then(response => {
+              this.$modal.msgSuccess("修改成功");
+              this.open = false;
+              this.getList();
+            });
+          } else {
+
+            addSort(this.form).then(response => {
+              this.$modal.msgSuccess("新增成功");
+              this.open = false;
+              this.getList();
+            });
+          }
+        }
+      })
+    },
+    // 取消按钮
+    cancel() {
+      this.open = false;
+      this.reset();
     },
   }
 }

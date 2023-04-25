@@ -5,15 +5,15 @@
         <div class="flex-row-ver-center title-row">
           <div class="flex-auto-item">
             <!-- 标题 -->
-            <el-form-item class="mb-8" prop="postTitle">
-              <el-input v-model="editDataModel.postTitle" maxlength="100" placeholder="请输入标题..." />
+            <el-form-item class="mb-8" prop="title">
+              <el-input v-model="editDataModel.title" maxlength="100" placeholder="请输入标题..." />
             </el-form-item>
           </div>
           <div class="btn-area flex-fixed-item">
             <el-button v-if="editMode === 'm'" type="danger" @click="handleDelete">
               删除
             </el-button>
-            <el-button v-if="editDataModel.postStatus === 'DRAFT'" @click="saveData('DRAFT')">
+            <el-button v-if="editDataModel.status === 'DRAFT'" @click="saveData('DRAFT')">
               保存草稿
             </el-button>
             <el-button type="primary" @click="pubButtonClick">
@@ -22,8 +22,8 @@
           </div>
         </div>
         <!-- 正文 :html="false"   -->
-        <el-form-item prop="postContent">
-          <mavon-editor v-model="editDataModel.postContent" ref="md" :style="'height:'+ mdEditorHeight + ';box-shadow:none;border:1px solid #efefef;'" @change="handleEditorChange" @imgAdd="handleEditorImgAdd" :toolbars="toolbars" >
+        <el-form-item prop="content">
+          <mavon-editor v-model="editDataModel.content" ref="md" :style="'height:'+ mdEditorHeight + ';box-shadow:none;border:1px solid #efefef;'" @change="handleEditorChange" @imgAdd="handleEditorImgAdd" :toolbars="toolbars" >
             <template v-slot:left-toolbar-before>
               <div class="styleof-inlineblock">
                 <el-upload class="upload-demo" :action="importMdUrl" :headers="{Authorization: getToken()}" accept=".md" :show-file-list="false" :on-success="importMdSuccess" :before-upload="beforeImportMdSuccess">
@@ -49,7 +49,7 @@
         </el-form-item>
         <!-- 摘要 -->
         <el-form-item label="摘要">
-          <el-input v-model="editDataModel.postExcerpt" :rows="3" :autosize="{ minRows: 3, maxRows: 3}" type="textarea" placeholder="请输入摘要" maxlength="100" show-word-limit />
+          <el-input v-model="editDataModel.abstract" :rows="3" :autosize="{ minRows: 3, maxRows: 3}" type="textarea" placeholder="请输入摘要" maxlength="100" show-word-limit />
         </el-form-item>
         <el-form-item label="封面图">
           <div class="styleof-inlineblock" @mouseover="articleCoverOpLayerShow = true" @mouseleave="articleCoverOpLayerShow = false">
@@ -105,16 +105,13 @@ export default {
 
       // 页面用来编辑的数据模型
       editDataModel: {
-        postsId: undefined,
-        postTitle: '', // 标题
-        postContent: '', // 正文
-        htmlContent: '', // html内容，现在转化了，前端直接查询展示就好了
-        postExcerpt: '', // 摘要
+        articleId: undefined,
+        title: '', // 标题
+        content: '', // 正文
+        abstract: '', // 摘要
         postType: 'POST', // 文章类型
-        postStatus: 'DRAFT', // 文章状态
-        termTaxonomyId: '', // 所属栏目id
+        status: 'DRAFT', // 文章状态
         attribute: '', // 属性
-        tags: '' // 标签
       },
 
       // 所有标签列表
@@ -124,8 +121,8 @@ export default {
 
       // 编辑弹窗校验规则
       rules: {
-        postTitle: [{ required: true, validator: emptyChecker, message: '文章标题不能为空', trigger: 'none' }],
-        postContent: [{ required: true, validator: emptyChecker, message: '文章正文不能为空', trigger: 'none' }]
+        title: [{ required: true, validator: emptyChecker, message: '文章标题不能为空', trigger: 'none' }],
+        content: [{ required: true, validator: emptyChecker, message: '文章正文不能为空', trigger: 'none' }]
       },
 
       articleCoverUrl: '',
@@ -198,16 +195,6 @@ export default {
     }
   },
   methods: {
-    // 查询标签列表方法
-    getSystemTagList() {
-      return getTagList({ page: 1, pageSize: 1000 }).then(res => {
-        res.items.forEach((item, i) => {
-          item.oriIndex = i
-          item.selected = false
-        })
-        this.allTagList = res.items
-      })
-    },
 
     // 上传文章封面图之前验证的方法
     beforeArticleCoverUpload(file) {
@@ -248,8 +235,6 @@ export default {
       }
     },
 
-    getToken,
-    createUuid,
 
     // md编辑器上传图片方法
     handleEditorImgAdd(pos, $file) {
@@ -303,7 +288,7 @@ export default {
     // 保存文章方法
     saveData(stateSetting) {
       // 赋值文章状态
-      this.editDataModel.postStatus = stateSetting
+      this.editDataModel.status = stateSetting
       // 赋值属性
       this.otherSettings.articleCoverUrl = this.articleCoverUrl
       this.editDataModel.attribute = JSON.stringify(this.otherSettings)
@@ -350,8 +335,9 @@ export default {
     },
     // 加载编辑的数据
     loadData() {
-      getArticleById({ postsId: this.editId }).then(res => {
-        this.editDataModel = res
+      getArticleById({ articleId: this.editId }).then(res => {
+        console.log(res.data)
+        this.editDataModel = res.data
         if (this.editDataModel.attribute) {
           // 赋值界面属性对象
           this.otherSettings = this.editDataModel.attribute
@@ -396,8 +382,9 @@ export default {
   mounted() {
     // this.$store.dispatch('refleshUserInfo')
     // 初始化可供选择的标签列表
-    this.getSystemTagList().then(() => {
+    //this.getSystemTagList().then(() => {
       // 编辑的情况
+    console.log('gggggggggggggg')
       if (this.$route.query.aid) {
         this.editId = this.$route.query.aid
         this.editMode = 'm'
@@ -409,7 +396,7 @@ export default {
         this.columnId = this.$route.query.cid
         this.editDataModel.termTaxonomyId = this.columnId
       }
-    })
+    //})
     // 使md编辑器高度，随浏览器窗口自动变化
     let that = this
     that.mdEditorHeight = (window.innerHeight - 55 - 98) + 'px'

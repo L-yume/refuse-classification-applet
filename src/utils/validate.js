@@ -81,3 +81,21 @@ export function isArray(arg) {
   }
   return Array.isArray(arg)
 }
+
+/**
+ * 验证是否为空方法，因为element-ui自带的非空验证无法屏蔽空格，所以自定义此方法
+ * @param {object} rule 校验规则对象
+ * @param {any} value 表单值
+ * @param {function} callback 系统回调函数
+ */
+export const emptyChecker = (rule, value, callback) => {
+  if (typeof value === 'string') {
+    value = value.trim()
+  }
+
+  if (!value && value !== 0) {
+    // 参数无用
+    callback(new Error('不能为空'))
+  }
+  callback()
+}

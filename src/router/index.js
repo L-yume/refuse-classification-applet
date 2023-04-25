@@ -128,13 +128,13 @@ export const dynamicRoutes = [
     children: [
       {
         path: 'article-edit',
-        component: () => import('@/views/uniapp/article-editing'),
+        component: () => import('@/views/uniapp/article-editing/article-edit-without-columns'),
         name: 'ArticleEditing',
         meta: { title: '编辑文章'}
       },
       {
         path: 'article-modify',
-        component: () => import('@/views/uniapp/article-editing'),
+        component: () => import('@/views/uniapp/article-editing/article-edit-without-columns'),
         name: 'ArricleModify',
         meta: {title: '修改文章'}
       }

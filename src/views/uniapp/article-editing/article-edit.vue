@@ -331,6 +331,7 @@ export default {
     },
     // 加载编辑的数据
     loadData() {
+      console.log('-----------')
       getArticleById({ postsId: this.editId }).then(res => {
         this.editDataModel = res
         if (this.editDataModel.attribute) {

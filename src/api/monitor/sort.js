@@ -11,17 +11,32 @@ export function list(query) {
 }
 
 // 查询用户详细
-export function getUser(userId) {
+export function getSort(sortId) {
   return request({
-    url: '/system/user/' + parseStrEmpty(userId),
+    url: '/uniapp/sort/' + parseStrEmpty(sortId),
     method: 'get'
   })
 }
-
-// 删除用户
-export function delUser(userId) {
+// 新增分类
+export function addSort(data) {
   return request({
-    url: '/system/user/' + userId,
+    url: '/uniapp/sort',
+    method: 'post',
+    data: data
+  })
+}
+//修改分类
+export function updateSort(data) {
+  return request({
+    url: '/uniapp/sort',
+    method: 'put',
+    data: data
+  })
+}
+// 删除分类
+export function deleteSort(sortId) {
+  return request({
+    url: '/uniapp/sort/' + sortId,
     method: 'delete'
   })
 }

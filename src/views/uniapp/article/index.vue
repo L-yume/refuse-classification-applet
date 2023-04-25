@@ -322,6 +322,7 @@ export default {
     handleUpdate(row) {
       // this.openEditPage(row.postsId)
       // this.$router.push(`/content/article-editing?aid=${row.postsId}`)
+      console.log('ssssssssssss')
       this.$router.push(`/uniapp/article-modify?aid=${row.articleId}`)
     },
     // 行删除按钮处理
