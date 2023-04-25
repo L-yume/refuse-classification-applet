@@ -14,6 +14,7 @@ import co.lvyi.bean.admin.vo.ArticleVO;
 import co.lvyi.common.utils.StringUtils;
 import co.lvyi.system.mapper.ArticleMapper;
 import co.lvyi.system.service.IArticleService;
+import co.lvyi.system.service.IOssService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -29,27 +30,22 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Autowired
     private ArticleMapper articleMapper;
 
-    @Override
-    public IPage<ArticleVO> findByPage(ArticleDTO articleDTO) {
-        QueryWrapper<ArticleDTO> queryWrapper = new QueryWrapper<>();
-        if (articleDTO.getOrderBy() != null){
-            String[] cloums = articleDTO.getOrderBy().split(",");
-            queryWrapper.orderBy(true, true, cloums);
-        }
-        if (StringUtils.isNotEmpty(articleDTO.getTitleKeyword())){
-            queryWrapper.like("title", "%" + articleDTO.getTitleKeyword() + "%");
-        }
-        if (StringUtils.isNotEmpty(articleDTO.getPostStatus())){
-            queryWrapper.eq("status", articleDTO.getPostStatus());
-        }
-
-        Page<ArticleVO> articlePage = new Page<>(articleDTO.getPage(), articleDTO.getPageSize());
-        return this.getBaseMapper().findByPage(articlePage, queryWrapper);
-    }
+    @Autowired
+    private IOssService ossService;
 
     @Override
     public List<Article> selectArticleList(ArticleDTO articleDTO) {
         return articleMapper.selectArticleList(articleDTO);
+    }
+
+    @Override
+    public ArticleVO selectArticleById(Integer articleId) {
+        return articleMapper.selectArticleById(articleId);
+    }
+
+    @Override
+    public int addArticle(ArticleDTO articleDTO) {
+        return articleMapper.addArticle(articleDTO);
     }
 }
 

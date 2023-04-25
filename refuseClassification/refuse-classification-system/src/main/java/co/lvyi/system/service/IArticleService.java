@@ -10,7 +10,10 @@ import java.util.List;
 
 public interface IArticleService extends IService<Article> {
 
-    IPage<ArticleVO> findByPage(ArticleDTO articleDTO);
 
     List<Article> selectArticleList(ArticleDTO articleDTO);
+
+    ArticleVO selectArticleById(Integer articleId);
+
+    int addArticle(ArticleDTO articleDTO);
 }

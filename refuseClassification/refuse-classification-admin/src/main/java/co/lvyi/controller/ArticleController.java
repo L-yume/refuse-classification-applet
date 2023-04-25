@@ -13,15 +13,13 @@ import co.lvyi.bean.admin.entity.Article;
 import co.lvyi.bean.admin.vo.ArticleVO;
 import co.lvyi.common.controller.BaseController;
 import co.lvyi.common.page.TableDataInfo;
+import co.lvyi.common.restful.JsonResult;
 import co.lvyi.common.restful.ResultObject;
 import co.lvyi.system.service.IArticleService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/uniapp/article")
+@RequestMapping("uniapp/article")
 @Slf4j
 public class ArticleController extends BaseController {
 
@@ -53,6 +51,12 @@ public class ArticleController extends BaseController {
         List<Article> list = articleService.selectArticleList(articleDTO);
         log.info("文章列表："+list);
         return getDataTable(list);
+    }
+
+    @RequestMapping(value = "/getById", method = RequestMethod.GET)
+    public JsonResult getInfo(@RequestParam(value = "articleId") Integer articleId) {
+        log.info("sss"+articleService.selectArticleById(articleId));
+        return success(articleService.selectArticleById(articleId));
     }
 }
 

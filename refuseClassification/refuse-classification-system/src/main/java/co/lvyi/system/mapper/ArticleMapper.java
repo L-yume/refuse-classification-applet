@@ -24,5 +24,9 @@ public interface ArticleMapper extends BaseMapper<Article> {
     IPage<ArticleVO> findByPage(IPage<ArticleVO> page, @Param(Constants.WRAPPER) Wrapper<ArticleDTO> wrapper);
 
     List<Article> selectArticleList(ArticleDTO articleDTO);
+
+    public ArticleVO selectArticleById(Integer articleId);
+
+    public int addArticle(ArticleDTO articleDTO);
 }
 

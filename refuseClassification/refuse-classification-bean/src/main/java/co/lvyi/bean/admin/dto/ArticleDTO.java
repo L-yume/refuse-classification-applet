@@ -18,17 +18,16 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="文章分页对象", description="文章")
 public class ArticleDTO {
-    long pageSize;
-    long page;
 
-    @ApiModelProperty(value = "排序字段,按数据库字段:menu_order,post_date,post_modified,page_view;多个以逗号间隔")
-    private String orderBy;
-    @ApiModelProperty(value = "是否升序，boolean类型")
-    private boolean isAsc;
+    private String title;
+    private boolean reprintedFrom;
     @ApiModelProperty(value = "标题关键字")
-    private String TitleKeyword;
+    private String keywords;
+    private String abstracts;
+    private String content;
 
     @ApiModelProperty(value = "文章状态PUBLISHED,DELETED,DRAFT")
-    private String postStatus;
+    private String status;
+    private String attribute;
 }
 

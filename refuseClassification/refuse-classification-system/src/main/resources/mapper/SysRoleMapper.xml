@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectRoleList" parameterType="SysRole" resultMap="SysRoleResult">
 		<include refid="selectRoleVo"/>
 		where r.del_flag = '0'
-		<if test="roleId != null and roleId != 0">
+		<!--<if test="roleId != null and roleId != 0">
 			AND r.role_id = #{roleId}
 		</if>
 		<if test="roleName != null and roleName != ''">
@@ -44,14 +44,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="roleKey != null and roleKey != ''">
 			AND r.role_key like concat('%', #{roleKey}, '%')
 		</if>
-		<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+		<if test="params.beginTime != null and params.beginTime != ''">&lt;!&ndash; 开始时间检索 &ndash;&gt;
 			and date_format(r.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
 		</if>
-		<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+		<if test="params.endTime != null and params.endTime != ''">&lt;!&ndash; 结束时间检索 &ndash;&gt;
 			and date_format(r.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
-		</if>
+		</if>-->
 		<!-- 数据范围过滤 -->
-		${params.dataScope}
+# 		${params.dataScope}
 		order by r.role_sort
 	</select>
     

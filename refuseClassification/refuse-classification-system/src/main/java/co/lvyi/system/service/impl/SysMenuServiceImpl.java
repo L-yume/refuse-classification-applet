@@ -9,6 +9,7 @@
 package co.lvyi.system.service.impl;
 
 import co.lvyi.bean.admin.entity.SysMenu;
+import co.lvyi.bean.admin.entity.SysRole;
 import co.lvyi.bean.admin.entity.SysUser;
 import co.lvyi.bean.admin.entity.TreeSelect;
 import co.lvyi.common.constant.Constants;
@@ -16,6 +17,8 @@ import co.lvyi.common.constant.UserConstants;
 import co.lvyi.common.utils.SecurityUtils;
 import co.lvyi.common.utils.StringUtils;
 import co.lvyi.system.mapper.SysMenuMapper;
+import co.lvyi.system.mapper.SysRoleMapper;
+import co.lvyi.system.mapper.SysRoleMenuMapper;
 import co.lvyi.system.service.ISysMenuService;
 import co.lvyi.system.vo.MetaVo;
 import co.lvyi.system.vo.RouterVo;
@@ -23,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 菜单 业务层处理
@@ -32,6 +36,12 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
     @Autowired
     public SysMenuMapper menuMapper;
+
+    @Autowired
+    public SysRoleMapper roleMapper;
+
+    @Autowired
+    public SysRoleMenuMapper roleMenuMapper;
 
     /**
      * 根据用户查询系统菜单列表
@@ -133,7 +143,8 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
     @Override
     public List<Long> selectMenuListByRoleId(Long roleId) {
-        return null;
+        SysRole role = roleMapper.selectRoleById(roleId);
+        return menuMapper.selectMenuListByRoleId(roleId, role.isMenuCheckStrictly());
     }
 
     /**
@@ -196,46 +207,73 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
     @Override
     public List<SysMenu> buildMenuTree(List<SysMenu> menus) {
-        return null;
+        List<SysMenu> returnList = new ArrayList<SysMenu>();
+        List<Long> tempList = menus.stream().map(SysMenu::getMenuId).collect(Collectors.toList());
+        for (Iterator<SysMenu> iterator = menus.iterator(); iterator.hasNext();)
+        {
+            SysMenu menu = (SysMenu) iterator.next();
+            // 如果是顶级节点, 遍历该父节点的所有子节点
+            if (!tempList.contains(menu.getParentId()))
+            {
+                recursionFn(menus, menu);
+                returnList.add(menu);
+            }
+        }
+        if (returnList.isEmpty())
+        {
+            returnList = menus;
+        }
+        return returnList;
     }
 
     @Override
     public List<TreeSelect> buildMenuTreeSelect(List<SysMenu> menus) {
-        return null;
+        List<SysMenu> menuTrees = buildMenuTree(menus);
+        return menuTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
     }
 
     @Override
     public SysMenu selectMenuById(Long menuId) {
-        return null;
+        return menuMapper.selectMenuById(menuId);
     }
 
     @Override
     public boolean hasChildByMenuId(Long menuId) {
-        return false;
+        int result = menuMapper.hasChildByMenuId(menuId);
+        return result > 0;
     }
 
     @Override
     public boolean checkMenuExistRole(Long menuId) {
-        return false;
+        int result = roleMenuMapper.checkMenuExistRole(menuId);
+        return result > 0;
     }
 
     @Override
     public int insertMenu(SysMenu menu) {
-        return 0;
+        return menuMapper.insertMenu(menu);
     }
 
     @Override
     public int updateMenu(SysMenu menu) {
-        return 0;
+        return menuMapper.updateMenu(menu);
     }
 
     @Override
     public int deleteMenuById(Long menuId) {
-        return 0;
+        return menuMapper.deleteMenuById(menuId);
     }
 
     @Override
-    public boolean checkMenuNameUnique(SysMenu menu) {return false;}
+    public boolean checkMenuNameUnique(SysMenu menu) {
+        Long menuId = StringUtils.isNull(menu.getMenuId()) ? -1L : menu.getMenuId();
+        SysMenu info = menuMapper.checkMenuNameUnique(menu.getMenuName(), menu.getParentId());
+        if (StringUtils.isNotNull(info) && info.getMenuId().longValue() != menuId.longValue())
+        {
+            return UserConstants.NOT_UNIQUE;
+        }
+        return UserConstants.UNIQUE;
+    }
 
     /**
      * 获取路由名称

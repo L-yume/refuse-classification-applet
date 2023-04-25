@@ -10,9 +10,40 @@
         <result property="description" column="description"/>
         <result property="createTime"   column="create_time"  />
         <result property="updateTime"   column="update_time"  />
+        <result property="remark"         column="remark"          />
     </resultMap>
+
+    <insert id="insertSort" parameterType="RefuseSort">
+        insert into sort(
+            <if test="refuseType != null and refuseType != '' ">refuse_type, </if>
+            <if test="description != null and description != '' ">description, </if>
+            <if test="remark != null and remark != ''">remark, </if>
+            create_time
+        )
+        values (
+        <if test="refuseType != null and refuseType != '' ">#{refuseType}, </if>
+        <if test="description != null and description != '' ">#{description}, </if>
+        <if test="remark != null and remark != ''">#{remark}, </if>
+        sysdate()
+        )
+    </insert>
+
+    <update id="updateSort" parameterType="RefuseSort">
+        update sort set refuse_type = #{refuseType}, description = #{description}, update_time = sysdate()
+        where sort_id = #{sortId}
+    </update>
+
+    <delete id="deleteSortById" parameterType="Integer">
+        delete from sort where sort_id = #{sortId}
+    </delete>
 
     <select id="selectSortList" parameterType="RefuseSort" resultMap="RefuseSortResult">
         select sort_id, refuse_type, description, create_time from sort
+    </select>
+
+    <select id="selectSortById" parameterType="Integer" resultMap="RefuseSortResult">
+        select sort_id, refuse_type, description, create_time
+        from sort
+        where sort_id = #{sortId}
     </select>
 </mapper>

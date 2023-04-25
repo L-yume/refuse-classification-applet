@@ -60,3 +60,9 @@ aliyun:
     dir:
       prefix: refuseClassification/images/
       prefix2: refuseClassification/videos/
+
+# PageHelper分页插件
+pagehelper:
+  helperDialect: mysql
+  supportMethodsArguments: true
+  params: count=countSql

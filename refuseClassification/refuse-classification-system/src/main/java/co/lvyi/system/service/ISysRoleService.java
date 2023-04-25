@@ -126,7 +126,7 @@ public interface ISysRoleService
      * @param role 角色信息
      * @return 结果
      */
-    public int authDataScope(SysRole role);
+    public void authDataScope(SysRole role);
 
     /**
      * 通过角色ID删除角色

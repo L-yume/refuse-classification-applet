@@ -14,12 +14,22 @@
         <result column="created_time" property="createdTime"/>
         <result column="updated_time" property="updatedTime"/>
     </resultMap>
-    
+
+    <insert id="addArticle" parameterType="co.lvyi.bean.admin.dto.ArticleDTO">
+        insert into articles (title, reprinted_from, keywords, abstracts, content, attribute, status, created_time)
+        values (#{title}, #{reprintedFrom}, #{keywords}, #{abstracts}, #{content}, #{attribute}, #{status}, sysdate())
+    </insert>
+
     <select id="findByPage" resultMap="ArticleResultMap">
         select article_id, title, status, reprinted_from, content, attribute, created_time, updated_time from articles
     </select>
 
     <select id="selectArticleList" resultMap="ArticleResultMap">
         select article_id, title, status, reprinted_from, content, attribute, created_time, updated_time from articles
+    </select>
+
+    <select id="selectArticleById" parameterType="Integer" resultMap="ArticleResultMap">
+        select article_id, title, status, reprinted_from, content, attribute, created_time, updated_time from articles
+        where article_id = #{articleId}
     </select>
 </mapper>

@@ -31,6 +31,10 @@
             <artifactId>system</artifactId>
             <version>${refuseClassificaton.version}</version>
         </dependency>
+        <dependency>
+            <groupId>co.lvyi</groupId>
+            <artifactId>bean</artifactId>
+        </dependency>
         <!-- SpringBoot Web容器 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

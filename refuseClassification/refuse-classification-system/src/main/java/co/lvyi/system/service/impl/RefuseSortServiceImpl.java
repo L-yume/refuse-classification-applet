@@ -26,5 +26,25 @@ public class RefuseSortServiceImpl implements IRefuseSortService {
     public List<RefuseSort> selectSortList(RefuseSort refuseSort) {
         return sortMapper.selectSortList(refuseSort);
     }
+
+    @Override
+    public RefuseSort selectSortById(Integer sortId) {
+        return sortMapper.selectSortById(sortId);
+    }
+
+    @Override
+    public int insertSort(RefuseSort refuseSort) {
+        return sortMapper.insertSort(refuseSort);
+    }
+
+    @Override
+    public int updateSort(RefuseSort refuseSort) {
+        return sortMapper.updateSort(refuseSort);
+    }
+
+    @Override
+    public int deleteSortById(Integer sortId) {
+        return sortMapper.deleteSortById(sortId);
+    }
 }
 

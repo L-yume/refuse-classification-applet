@@ -58,6 +58,7 @@ public class SysNoticeController extends BaseController {
      * 新增通知公告
      */
     @PreAuthorize("@ss.hasPermi('system:notice:add')")
+    @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping
     public JsonResult add(@Validated @RequestBody SysNotice notice)
     {
