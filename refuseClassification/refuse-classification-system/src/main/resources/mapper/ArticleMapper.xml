@@ -11,25 +11,30 @@
         <result column="status" property="status"/>
         <result column="content" property="content"/>
         <result column="attribute" property="attribute" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
+        <result column="isOnTop" property="isOnTop"/>
         <result column="created_time" property="createdTime"/>
         <result column="updated_time" property="updatedTime"/>
     </resultMap>
 
-    <insert id="addArticle" parameterType="co.lvyi.bean.admin.dto.ArticleDTO">
-        insert into articles (title, reprinted_from, keywords, abstracts, content, attribute, status, created_time)
-        values (#{title}, #{reprintedFrom}, #{keywords}, #{abstracts}, #{content}, #{attribute}, #{status}, sysdate())
+    <insert id="addArticle" parameterType="Article">
+        insert into articles (title, reprinted_from, keywords, abstracts, content, attribute, isOnTop, status, created_time)
+        values (#{title}, #{reprintedFrom}, #{keywords}, #{abstracts}, #{content}, #{attribute}, #{isOnTop}, #{status}, sysdate())
     </insert>
+
+    <delete id="deleteArticleById" parameterType="Integer">
+        delete from articles where article_id = #{article_id}
+    </delete>
 
     <select id="findByPage" resultMap="ArticleResultMap">
         select article_id, title, status, reprinted_from, content, attribute, created_time, updated_time from articles
     </select>
 
     <select id="selectArticleList" resultMap="ArticleResultMap">
-        select article_id, title, status, reprinted_from, content, attribute, created_time, updated_time from articles
+        select article_id, title, status, reprinted_from, content, attribute, isOnTop, created_time, updated_time from articles
     </select>
 
     <select id="selectArticleById" parameterType="Integer" resultMap="ArticleResultMap">
-        select article_id, title, status, reprinted_from, content, attribute, created_time, updated_time from articles
+        select article_id, title, status, reprinted_from, content, attribute, isOnTop, created_time, updated_time from articles
         where article_id = #{articleId}
     </select>
 </mapper>

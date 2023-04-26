@@ -42,7 +42,7 @@ public class ArticleVO extends BaseVO{
 
     @ApiModelProperty(value = "文章状态")
     private String status;
-
+    private Integer isOnTop;
 
     @ApiModelProperty(value = "修改时间")
     private Date updatedTime;
@@ -50,15 +50,6 @@ public class ArticleVO extends BaseVO{
     @TableField(typeHandler = JacksonTypeHandler.class)
     @ApiModelProperty("属性")
     private Map<String,Object> attribute;
-
-
-    @ApiModelProperty("格式化修改时间")
-    private String postModifiedShortTime;
-
-    public String getPostModifiedShortTime() {
-        return DateUtil.getShortTime(getUpdatedTime());
-    }
-
 
 }
 

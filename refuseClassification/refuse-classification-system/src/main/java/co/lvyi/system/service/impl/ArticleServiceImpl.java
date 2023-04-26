@@ -14,15 +14,15 @@ import co.lvyi.bean.admin.vo.ArticleVO;
 import co.lvyi.common.utils.StringUtils;
 import co.lvyi.system.mapper.ArticleMapper;
 import co.lvyi.system.service.IArticleService;
-import co.lvyi.system.service.IOssService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements IArticleService {
@@ -30,8 +30,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Autowired
     private ArticleMapper articleMapper;
 
-    @Autowired
-    private IOssService ossService;
+    private static ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public List<Article> selectArticleList(ArticleDTO articleDTO) {
@@ -45,7 +44,28 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public int addArticle(ArticleDTO articleDTO) {
-        return articleMapper.addArticle(articleDTO);
+        Article article = new Article();
+        BeanUtils.copyProperties(articleDTO, article);
+        article.setKeywords(article.getTitle());
+        article.setIsOnTop(0);
+        //handleAttribute(articleDTO, article);
+        return articleMapper.addArticle(article);
+    }
+
+    @Override
+    public int deleteArticleById(Integer articleId) {
+        return articleMapper.deleteArticleById(articleId);
+    }
+
+    private void handleAttribute(ArticleDTO articleDTO, Article article) {
+        if (StringUtils.isNotEmpty(articleDTO.getAttribute())) {
+            try {
+                Map attribute = objectMapper.readValue(articleDTO.getAttribute(), Map.class);
+                //article.setAttribute(attribute);
+            } catch (JsonProcessingException e) {
+                log.error("扩展字段处理出错：{}", e);
+            }
+        }
     }
 }
 

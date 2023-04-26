@@ -43,7 +43,7 @@ public class OssServiceImpl implements IOssService {
             String objectName = ossDirPrefix + FileNameUtil.getImgName(file.getOriginalFilename());
             // 创建PutObject请求。
             ossClient.putObject(ossBucketName, objectName, file.getInputStream());
-            ossClient.shutdown();
+            //ossClient.shutdown();
             return getImgUrl(objectName);
         } catch (IOException e) {
             log.error(e.getMessage());

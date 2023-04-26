@@ -49,12 +49,14 @@ public class Article implements Serializable {
     @ApiModelProperty(value = "文章状态")
     private String status;
 
-
+    private String keywords;
+    private String abstracts;
+    private Integer isOnTop;
     @ApiModelProperty(value = "修改时间")
     private Date updatedTime;
 
     @TableField(typeHandler = JacksonTypeHandler.class)
     @ApiModelProperty("属性")
-    private Map<String,Object> attribute;
+    private String attribute;
 }
 

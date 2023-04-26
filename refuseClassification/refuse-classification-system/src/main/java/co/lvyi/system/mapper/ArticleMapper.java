@@ -27,6 +27,8 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     public ArticleVO selectArticleById(Integer articleId);
 
-    public int addArticle(ArticleDTO articleDTO);
+    public int addArticle(Article article);
+
+    public int deleteArticleById(Integer articleId);
 }
 

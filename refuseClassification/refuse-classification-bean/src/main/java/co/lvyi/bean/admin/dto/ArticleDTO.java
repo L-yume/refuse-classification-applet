@@ -20,12 +20,12 @@ import lombok.EqualsAndHashCode;
 public class ArticleDTO {
 
     private String title;
-    private boolean reprintedFrom;
+    private String reprintedFrom;
     @ApiModelProperty(value = "标题关键字")
     private String keywords;
     private String abstracts;
     private String content;
-
+    private Integer isOnTop;
     @ApiModelProperty(value = "文章状态PUBLISHED,DELETED,DRAFT")
     private String status;
     private String attribute;

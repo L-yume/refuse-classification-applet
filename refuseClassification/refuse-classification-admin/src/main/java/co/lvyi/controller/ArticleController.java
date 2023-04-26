@@ -10,21 +10,18 @@ package co.lvyi.controller;
 
 import co.lvyi.bean.admin.dto.ArticleDTO;
 import co.lvyi.bean.admin.entity.Article;
-import co.lvyi.bean.admin.vo.ArticleVO;
+import co.lvyi.common.annotation.Log;
 import co.lvyi.common.controller.BaseController;
+import co.lvyi.common.enums.BusinessType;
 import co.lvyi.common.page.TableDataInfo;
 import co.lvyi.common.restful.JsonResult;
-import co.lvyi.common.restful.ResultObject;
 import co.lvyi.system.service.IArticleService;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("uniapp/article")
@@ -34,16 +31,6 @@ public class ArticleController extends BaseController {
     @Autowired
     private IArticleService articleService;
 
-    @GetMapping("/list")
-    @ResponseBody
-    public ResultObject<Map<String, Object>> list(ArticleDTO articleDTO) {
-        Map<String, Object> map = new HashMap<>();
-        IPage<ArticleVO> page = articleService.findByPage(articleDTO);
-        log.info("文章列表："+page);
-        map.put("items", page.getRecords());
-        map.put("total", page.getTotal());
-        return ResultObject.success(map);
-    }
 
     @GetMapping("/list2")
     public TableDataInfo list2(ArticleDTO articleDTO) {
@@ -57,6 +44,18 @@ public class ArticleController extends BaseController {
     public JsonResult getInfo(@RequestParam(value = "articleId") Integer articleId) {
         log.info("sss"+articleService.selectArticleById(articleId));
         return success(articleService.selectArticleById(articleId));
+    }
+
+    @Log(title = "文章管理", businessType = BusinessType.INSERT)
+    @PostMapping
+    public JsonResult add(@Validated @RequestBody ArticleDTO articleDTO) {
+        return toAjax(articleService.addArticle(articleDTO));
+    }
+
+    @Log(title = "删除文章", businessType = BusinessType.DELETE)
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public JsonResult delete(@RequestParam(value = "articleId") Integer articleId) {
+        return toAjax(articleService.deleteArticleById(articleId));
     }
 }
 

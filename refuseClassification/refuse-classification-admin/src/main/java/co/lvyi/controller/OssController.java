@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/ossController")
+@RequestMapping("/ossController/upload")
 public class OssController {
 
     @Autowired
     private IOssService ossService;
 
-    @PostMapping("/img/upload")
+    @PostMapping("/img")
     @ResponseBody
     public ResultObject<String> uploadImg(@RequestParam("file") MultipartFile file) {
         return ResultObject.success(ossService.upload(file));
     }
 
-    @PostMapping("/video/upload")
+    @PostMapping("/video")
     @ResponseBody
     public ResultObject<String> uploadVideo(@RequestParam("file") MultipartFile file) {
         return ResultObject.success(ossService.uploadVideo(file));
