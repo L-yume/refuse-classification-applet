@@ -21,7 +21,7 @@ export function getArticleById(params) {
 // 删除文章方法
 export function deleteArticle(params) {
   return request({
-    url: `/posts/delete?_=${Math.random()}`,
+    url: `/uniapp/article/delete`,
     method: 'get',
     params
   })
@@ -30,7 +30,7 @@ export function deleteArticle(params) {
 // 添加文章保存方法
 export function createArticle(data) {
   return request({
-    url: '/posts/insert',
+    url: '/uniapp/article',
     method: 'post',
     data
   })
@@ -91,6 +91,6 @@ export function cancelArticleOnTop(data) {
   })
 }
 
-export const uploadUrl = process.env.VUE_APP_BASE_API + '/ossController/upload'
+export const uploadUrl = process.env.VUE_APP_BASE_API + '/ossController/upload/img'
 
 export const importMdUrl = process.env.VUE_APP_BASE_API + '/posts/uploadMd'

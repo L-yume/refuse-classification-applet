@@ -7,3 +7,5 @@ export function listVideo(query) {
     params: query
   })
 }
+
+export const uploadUrl = process.env.VUE_APP_BASE_API + '/ossController/upload/video'

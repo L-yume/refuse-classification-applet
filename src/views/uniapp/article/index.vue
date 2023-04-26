@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="table-container">
-      <el-table ref="multipleTable" height="calc(100% - 10px)" :key="tableAbout.tableKey" :data="tableAbout.tableData" border fit highlight-current-row class="normal-table" @selection-change="handleSelectionChange">
+      <el-table ref="multipleTable"  :key="tableAbout.tableKey" :data="tableAbout.tableData" border fit highlight-current-row class="normal-table" @selection-change="handleSelectionChange">
         <!-- <el-table-column align="center" class-name="recorrect-center" type="selection" width="55px" /> -->
         <el-table-column label="编号" prop="articleId" width="80px" align="center" />
         <el-table-column label="封面图" width="80px" align="center" class-name="article-cover-col">
@@ -38,7 +38,7 @@
         </el-table-column>
         <el-table-column label="标题" prop="title">
           <template slot-scope="{row}">
-            <img :src="onTopImageSrc" class="icon-ontop" v-if="row.menuOrder !== 0" />
+            <img :src="onTopImageSrc" class="icon-ontop" v-if="row.isOnTop !== 0" />
             <el-link type="primary" @click="handleUpdate(row)">{{row.title}}</el-link>
           </template>
         </el-table-column>
@@ -56,9 +56,9 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="置顶" prop="menuOrder" width="80px" align="center">
+        <el-table-column label="置顶" prop="isOnTop" width="80px" align="center">
           <template slot-scope="{row}">
-            <el-switch v-model="row.menuOrder" :active-value="1" :inactive-value="0" @change="handleSettingOnTop($event, row)">
+            <el-switch v-model="row.isOnTop" :active-value="1" :inactive-value="0" @change="handleSettingOnTop($event, row)">
             </el-switch>
           </template>
         </el-table-column>
@@ -137,7 +137,7 @@ export default {
         title: '', // 标题
         createdTime: '', // 发布时间
         content: '', // 正文
-        menuOrder: '', // 排序号
+        isOnTop: '', // 排序号
         postType: 'POST', // 文章类型
         status: 'DRAFT', // 文章状态
         attribute: '', // 属性
@@ -333,7 +333,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteArticle({ postsId: row.postsId }).then(() => {
+        deleteArticle({ articleId: row.articleId }).then(() => {
           this.$notify({
             title: '成功',
             message: '删除成功',

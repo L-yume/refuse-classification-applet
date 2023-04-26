@@ -41,15 +41,12 @@
     <el-dialog title="发布选项" :visible="pubDialogShow" :show-close="false" width="800px">
       <el-form ref="pubForm" :rules="rules" :model="editDataModel" label-position="right" label-width="100px">
         <!-- 文章标签 -->
-        <el-form-item label="标签">
-          <el-select v-model="selectedTagArray" class="full-row" filterable :multiple-limit="5" multiple placeholder="可输入文字查询">
-            <el-option v-for="item in allTagList" :key="item.postTagId" :label="item.description" :value="item.postTagId">
-            </el-option>
-          </el-select>
+        <el-form-item label="转载自">
+          <el-input v-model="editDataModel.reprintedFrom" />
         </el-form-item>
         <!-- 摘要 -->
         <el-form-item label="摘要">
-          <el-input v-model="editDataModel.abstract" :rows="3" :autosize="{ minRows: 3, maxRows: 3}" type="textarea" placeholder="请输入摘要" maxlength="100" show-word-limit />
+          <el-input v-model="editDataModel.abstracts" :rows="3" :autosize="{ minRows: 3, maxRows: 3}" type="textarea" placeholder="请输入摘要" maxlength="100" show-word-limit />
         </el-form-item>
         <el-form-item label="封面图">
           <div class="styleof-inlineblock" @mouseover="articleCoverOpLayerShow = true" @mouseleave="articleCoverOpLayerShow = false">
@@ -73,7 +70,7 @@
 </template>
 <script>
 import { getToken } from '@/utils/auth'
-import { getArticleById, deleteArticle, createArticle, updateArticle, getTagList, mdEditorUploadImage, uploadUrl, importMdUrl } from '@/api/monitor/articles'
+import { getArticleById, deleteArticle, createArticle, updateArticle, mdEditorUploadImage, uploadUrl, importMdUrl } from '@/api/monitor/articles'
 import { emptyChecker } from '@/utils/validate'
 import { createUuid, handleFormValidError, getTextFormHtml } from '@/utils/common'
 import qs from 'qs'
@@ -107,17 +104,15 @@ export default {
       editDataModel: {
         articleId: undefined,
         title: '', // 标题
+        reprintedFrom: '',
         content: '', // 正文
-        abstract: '', // 摘要
+        abstracts: '', // 摘要
         postType: 'POST', // 文章类型
         status: 'DRAFT', // 文章状态
         attribute: '', // 属性
       },
 
-      // 所有标签列表
-      allTagList: [],
-      // 已经选择的标签
-      selectedTagArray: [],
+
 
       // 编辑弹窗校验规则
       rules: {
@@ -235,6 +230,8 @@ export default {
       }
     },
 
+    getToken,
+    createUuid,
 
     // md编辑器上传图片方法
     handleEditorImgAdd(pos, $file) {
@@ -242,15 +239,16 @@ export default {
       formdata.append('file', $file)
       mdEditorUploadImage(formdata).then(res => {
         this.$refs.md.$img2Url(pos, res)
+        console.log('img--------'+res.data)
         this.$nextTick(() => {
-          let mdCurrentValue = this.editDataModel.postContent
+          let mdCurrentValue = this.editDataModel.content
           // 查找图片插入的字符串位置
           let pattern = /(!\[.*\]\()(.+)(\))/g
           let matchArr = mdCurrentValue.match(pattern)
           for (let i = matchArr.length - 1; i >= 0; i--) {
             const item = matchArr[i]
             if (item.indexOf(res) > -1) {
-              const currentMaxLength = this.editDataModel.postContent.length
+              const currentMaxLength = this.editDataModel.content.length
               const imgStrIndex = mdCurrentValue.indexOf(item)
               const prevPrevChar = imgStrIndex - 2 >= 0 ? mdCurrentValue.substr(imgStrIndex - 2, 1) : ''
               const prevChar = imgStrIndex - 1 >= 0 ? mdCurrentValue.substr(imgStrIndex - 1, 1) : ''
@@ -261,7 +259,7 @@ export default {
                 (nextChar == '\n' ? '' : '\n') +
                 (nextNextChar == '\n' ? '' : '\n')
               if (repItem.length != item.length) {
-                this.editDataModel.postContent = mdCurrentValue.replace(item, repItem)
+                this.editDataModel.content = mdCurrentValue.replace(item, repItem)
               }
             }
           }
@@ -271,7 +269,7 @@ export default {
 
     // md编辑器内容change事件
     handleEditorChange(value, transToHtml) {
-      this.editDataModel.htmlContent = transToHtml
+      this.editDataModel.content = transToHtml
     },
 
     // 弹出警告错误信息提示，点击确定后关闭窗口方法
@@ -292,16 +290,13 @@ export default {
       // 赋值属性
       this.otherSettings.articleCoverUrl = this.articleCoverUrl
       this.editDataModel.attribute = JSON.stringify(this.otherSettings)
-      // 赋值文章标签
-      if (this.selectedTagArray.length > 0) {
-        this.editDataModel.tags = this.selectedTagArray.join(',')
-      }
+
 
       this.$refs['dataForm'].validate((valid, errorInfo) => {
         if (valid) {
           this.dialogLoading = true
-          const postData = qs.stringify(this.editDataModel)
-
+          const postData = JSON.stringify(this.editDataModel)
+          console.log(this.editDataModel)
           const saveFunc = this.editMode === 'n' ? createArticle : updateArticle
 
           saveFunc(postData).then(() => {
@@ -311,7 +306,7 @@ export default {
               type: 'success',
               duration: 2000
             })
-            this.$router.push('/content/articles')
+            this.$router.push('/uniapp/article')
           })
         } else {
           handleFormValidError(errorInfo)
@@ -322,9 +317,9 @@ export default {
     pubButtonClick() {
       this.$refs['dataForm'].validate((valid, errorInfo) => {
         if (valid) {
-          if (!this.editDataModel.postExcerpt && this.editDataModel.htmlContent) {
-            let allText = (getTextFormHtml(this.editDataModel.htmlContent)).trim()
-            this.editDataModel.postExcerpt = allText.length > 100 ? allText.substr(0, 97) + '...' : allText
+          if (!this.editDataModel.title && this.editDataModel.content) {
+            let allText = (getTextFormHtml(this.editDataModel.content)).trim()
+            this.editDataModel.title = allText.length > 100 ? allText.substr(0, 97) + '...' : allText
           }
           this.pubDialogShow = true
         } else {
@@ -343,13 +338,7 @@ export default {
           this.otherSettings = this.editDataModel.attribute
           this.articleCoverUrl = this.otherSettings.articleCoverUrl
         }
-        // 赋值界面标签数组对象
-        if (this.editDataModel.tagsName) {
-          let tempArr = res.tagsName.split(',')
-          tempArr.forEach(x => {
-            this.selectedTagArray.push(parseInt(x))
-          })
-        }
+
         this.$refs['dataForm'].clearValidate()
       })
       // .catch(() => {
