@@ -10,4 +10,8 @@ public interface VideoMapper {
      * 根据条件分页查询视频数据
      */
     List<Video> selectVideoList(VideoDTO videoDTO);
+
+    public int addVideo(Video video);
+
+    public int deleteVideoById(Long videoId);
 }

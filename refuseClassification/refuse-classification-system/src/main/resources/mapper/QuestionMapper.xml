@@ -12,12 +12,35 @@
         <result property="answerC" column="answer_c"/>
         <result property="answerD" column="answer_d"/>
         <result property="correctAnswer" column="correct_answer"/>
+        <result property="analysis" column="analysis"/>
         <result property="createTime"   column="create_time"  />
         <result property="updateTime"   column="update_time"  />
     </resultMap>
 
+    <insert id="addTest" parameterType="Question">
+        insert into question (question, answer_a, answer_b, answer_c, answer_d, correct_answer, analysis, create_time)
+        values (#{question}, #{answerA}, #{answerB}, #{answerC}, #{answerD}, #{correctAnswer}, #{analysis}, sysdate())
+    </insert>
+
+    <update id="updateTest" parameterType="co.lvyi.bean.admin.dto.QuestionDTO">
+        update question set question = #{question}, answer_a = #{answerA}, answer_b = #{answerB},
+                            answer_c =#{answerC}, answer_d = #{answerD}, correct_answer = #{correctAnswer},
+                            analysis = #{analysis}, update_time = sysdate()
+        where question_id = #{questionId}
+    </update>
+
+    <delete id="deleteTestById" parameterType="Integer">
+        delete from question where question_id = #{questionId}
+    </delete>
+
     <select id="selectQuestionList" resultMap="QuestionResultMap">
         select question_id, question, answer_a, answer_b, answer_c, answer_d, correct_answer, create_time, update_time
         from question
+    </select>
+
+    <select id="selectTestById" resultMap="QuestionResultMap">
+        select question_id, question, answer_a, answer_b, answer_c, answer_d, correct_answer, analysis, create_time
+        from question
+        where question_id = #{questionId}
     </select>
 </mapper>

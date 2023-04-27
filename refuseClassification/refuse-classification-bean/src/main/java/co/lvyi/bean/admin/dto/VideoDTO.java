@@ -19,5 +19,6 @@ public class VideoDTO {
     private String duration;
     private String videoSize;
     private String videoFormat;
+    private String remark;
 }
 

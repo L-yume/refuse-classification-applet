@@ -16,6 +16,15 @@
         <result property="updateTime" column="update_time"/>
     </resultMap>
 
+    <insert id="addVideo" parameterType="Video">
+        insert into video (title, name, path, duration, video_size, video_format, status,  remark, create_time)
+        values (#{title}, #{name}, #{path}, #{duration}, #{videoSize}, #{videoFormat}, #{status}, #{remark}, sysdate())
+    </insert>
+
+    <delete id="deleteVideoById" parameterType="Long">
+        delete from video where video_id = #{videoId}
+    </delete>
+
     <select id="selectVideoList" parameterType="Video" resultMap="VideoResultMap">
         select video_id, title, name, duration, video_size, status, path, create_time, update_time
         from video

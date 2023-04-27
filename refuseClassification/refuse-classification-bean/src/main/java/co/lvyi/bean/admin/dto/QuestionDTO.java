@@ -12,11 +12,13 @@ import lombok.Data;
 
 @Data
 public class QuestionDTO {
+    private Integer questionId;
     private String question;
     private String answerA;
     private String answerB;
     private String answerC;
     private String answerD;
     private String correctAnswer;
+    private String analysis;
 }
 

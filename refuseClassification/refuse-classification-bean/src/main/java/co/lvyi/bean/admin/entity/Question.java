@@ -21,5 +21,6 @@ public class Question extends BaseEntity{
     private String answerC;
     private String answerD;
     private String correctAnswer;
+    private String analysis;
 }
 

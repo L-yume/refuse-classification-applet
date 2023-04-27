@@ -10,14 +10,16 @@ package co.lvyi.controller;
 
 import co.lvyi.bean.admin.dto.VideoDTO;
 import co.lvyi.bean.admin.entity.Video;
+import co.lvyi.common.annotation.Log;
 import co.lvyi.common.controller.BaseController;
+import co.lvyi.common.enums.BusinessType;
 import co.lvyi.common.page.TableDataInfo;
+import co.lvyi.common.restful.JsonResult;
 import co.lvyi.system.service.IVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,6 +36,18 @@ public class VideoController extends BaseController {
         startPage();
         List<Video> list = videoService.selectVideoList(videoDTO);
         return getDataTable(list);
+    }
+
+    @Log(title = "新增视频", businessType = BusinessType.INSERT)
+    @PostMapping
+    public JsonResult add(@Validated @RequestBody VideoDTO videoDTO) {
+        return toAjax(videoService.addVideo(videoDTO));
+    }
+
+    @Log(title = "删除视频", businessType = BusinessType.DELETE)
+    @DeleteMapping("/{videoId}")
+    public JsonResult delete(@PathVariable Long videoId) {
+        return toAjax(videoService.deleteVideoById(videoId));
     }
 }
 

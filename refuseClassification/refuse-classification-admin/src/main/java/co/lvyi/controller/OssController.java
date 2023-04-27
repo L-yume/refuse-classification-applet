@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/ossController/upload")
 public class OssController {
@@ -29,7 +31,7 @@ public class OssController {
 
     @PostMapping("/video")
     @ResponseBody
-    public ResultObject<String> uploadVideo(@RequestParam("file") MultipartFile file) {
+    public ResultObject<Map<String, Object>> uploadVideo(@RequestParam("file") MultipartFile file) {
         return ResultObject.success(ossService.uploadVideo(file));
     }
 }

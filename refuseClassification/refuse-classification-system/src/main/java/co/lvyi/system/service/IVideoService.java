@@ -15,5 +15,9 @@ import java.util.List;
 
 public interface IVideoService {
     public List<Video> selectVideoList(VideoDTO videoDTO);
+
+    public int addVideo(VideoDTO videoDTO);
+
+    public int deleteVideoById(Long videoId);
 }
 
