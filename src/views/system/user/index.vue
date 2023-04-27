@@ -281,8 +281,7 @@ export default {
       open: false,
       // 部门名称
       deptName: undefined,
-      // 默认密码
-      initPassword: undefined,
+
       // 日期范围
       dateRange: [],
       // 岗位选项
@@ -353,9 +352,7 @@ export default {
   created() {
     this.getList();
     //this.getDeptTree();
-    this.getConfigKey("sys.user.initPassword").then(response => {
-      this.initPassword = response.msg;
-    });
+
   },
   methods: {
     /** 查询用户列表 */
@@ -453,7 +450,6 @@ export default {
         this.roleOptions = response.roles;
         this.open = true;
         this.title = "添加用户";
-        this.form.password = this.initPassword;
       });
     },
     /** 修改按钮操作 */

@@ -140,6 +140,26 @@ export const dynamicRoutes = [
       }
     ]
   },
+  {
+    path: '/uniapp',
+    component: Layout,
+    hidden: true,
+    permissions: ['uniapp:test:edit'],
+    children: [
+      {
+        path: 'add-test',
+        component: () => import('@/views/uniapp/test/addAnswerChildren'),
+        name: 'AddTest',
+        meta: {title: '添加试题'}
+      },
+      {
+        path: 'test-modify',
+        component: () => import('@/views/uniapp/test/addAnswerChildren'),
+        name: 'TestModify',
+        meta: {title: '修改试题'}
+      }
+    ]
+  },
 
   {
     path: '/tool/gen-edit',

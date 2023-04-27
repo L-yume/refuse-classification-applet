@@ -99,7 +99,7 @@
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope" v-if="scope.row.roleId !== 1">
+        <template slot-scope="scope" >
           <el-button
             size="mini"
             type="text"
@@ -156,8 +156,8 @@
             :on-progress="uploadVideoProcess"
           >
             <video
-              v-if="videoForm.path != '' && videoFlag == false"
-              :src="videoForm.path"
+              v-if="form.path != '' && videoFlag == false"
+              :src="form.path"
               class="avatar"
               controls="controls"
               width="300px"
@@ -166,7 +166,7 @@
               您的浏览器不支持视频播放
             </video>
             <i
-              v-else-if="videoForm.path == '' && videoFlag == false"
+              v-else-if="form.path == '' && videoFlag == false"
               class="el-icon-plus avatar-uploader-icon"
             ></i>
             <el-progress
@@ -195,7 +195,7 @@
 <script>
 import { getToken } from '@/utils/auth'
 import { listRole, getRole, delRole, addRole, updateRole, dataScope, changeRoleStatus, deptTreeSelect } from "@/api/system/role";
-import {listVideo, uploadUrl} from "@/api/monitor/video";
+import {listVideo, addVideo, delVideo, uploadUrl} from "@/api/monitor/video";
 
 export default {
   name: "Video",
@@ -203,9 +203,7 @@ export default {
   data() {
     return {
       uploadUrl,
-      videoForm: {
-        path: ''
-      },
+
       videoFlag: false,
       videoUploadPercent: 0,
       // 遮罩层
@@ -242,7 +240,15 @@ export default {
         status: undefined
       },
       // 表单参数
-      form: {},
+      form: {
+        title: '',
+        name: '',
+        path: '',
+        duration: 0,
+        videoSize: '',
+        vidoeFormat: '',
+        remark: ''
+      },
 
       // 表单校验
       rules: {
@@ -317,7 +323,11 @@ export default {
       console.log('444444444444444'+JSON.stringify(res))
       const resp = JSON.parse(JSON.stringify(res))
       if (resp.code === 0) {
-        this.videoForm.path = resp.result
+        this.form.path = resp.result.path
+        this.form.duration = resp.result.duration
+        this.form.videoSize = resp.result.size
+        this.form.vidoeFormat = resp.result.format
+        this.form.name = resp.result.name
       } else {
         this.$message.error('视频上传失败，请重新上传！')
       }
@@ -429,16 +439,14 @@ export default {
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.roleId != undefined) {
-            this.form.menuIds = this.getMenuAllCheckedKeys();
+          if (this.videoList.videoId != undefined) {
             updateRole(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            this.form.menuIds = this.getMenuAllCheckedKeys();
-            addRole(this.form).then(response => {
+            addVideo(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -460,9 +468,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const roleIds = row.roleId || this.ids;
-      this.$modal.confirm('是否确认删除角色编号为"' + roleIds + '"的数据项？').then(function() {
-        return delRole(roleIds);
+      const videoIds = row.videoId || this.ids;
+      this.$modal.confirm('是否确认删除角色编号为"' + videoIds + '"的数据项？').then(function() {
+        return delVideo(videoIds);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
