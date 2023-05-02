@@ -171,6 +171,7 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
+      this.reset();
       this.open = true
       this.title = '添加垃圾分类'
     },
@@ -226,6 +227,16 @@ export default {
     cancel() {
       this.open = false;
       this.reset();
+    },
+    // 表单重置
+    reset() {
+        this.form = {
+          refuseType: undefined,
+          description: undefined,
+
+          remark: undefined
+        };
+      this.resetForm("form");
     },
   }
 }
