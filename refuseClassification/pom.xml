@@ -16,7 +16,6 @@
         <module>refuse-classification-bean</module>
         <module>refuse-classification-common</module>
         <module>refuse-classification-security</module>
-        <module>refuse-classification-service</module>
     </modules>
 
     <properties>
@@ -185,11 +184,7 @@
                 <artifactId>security</artifactId>
                 <version>${refuseClassificaton.version}</version>
             </dependency>
-            <dependency>
-                <groupId>co.lvyi</groupId>
-                <artifactId>service</artifactId>
-                <version>${refuseClassificaton.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>co.lvyi</groupId>
                 <artifactId>system</artifactId>

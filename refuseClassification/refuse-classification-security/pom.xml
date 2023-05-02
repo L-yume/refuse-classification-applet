@@ -21,11 +21,7 @@
             <artifactId>common</artifactId>
             <version>${refuseClassificaton.version}</version>
         </dependency>
-        <dependency>
-            <groupId>co.lvyi</groupId>
-            <artifactId>service</artifactId>
-            <version>${refuseClassificaton.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>co.lvyi</groupId>
             <artifactId>system</artifactId>

@@ -8,7 +8,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="refuse-classification-bean" />
-        <module name="refuse-classification-service" />
         <module name="refuse-classification-admin" />
         <module name="refuse-classification-common" />
         <module name="refuse-classification-security" />

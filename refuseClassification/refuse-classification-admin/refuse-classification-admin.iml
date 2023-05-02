@@ -103,7 +103,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="refuse-classification-security" />
-    <orderEntry type="module" module-name="refuse-classification-service" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:2.7.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.7.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-logging:2.7.0" level="project" />

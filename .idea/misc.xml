@@ -8,7 +8,6 @@
         <option value="$PROJECT_DIR$/refuseClassification/refuse-classification-bean/pom.xml" />
         <option value="$PROJECT_DIR$/refuseClassification/refuse-classification-common/pom.xml" />
         <option value="$PROJECT_DIR$/refuseClassification/refuse-classification-security/pom.xml" />
-        <option value="$PROJECT_DIR$/refuseClassification/refuse-classification-service/pom.xml" />
         <option value="$PROJECT_DIR$/refuseClassification/refuse-classification-system/pom.xml" />
         <option value="$PROJECT_DIR$/refuse-classification/refuse-classification-system/pom.xml" />
       </list>
