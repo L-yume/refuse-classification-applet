@@ -37,6 +37,9 @@ public class ArticleVO extends BaseVO{
     @ApiModelProperty(value = "正文")
     private String content;
 
+    @ApiModelProperty(value = "正文html")
+    private String htmlContent;
+
     @ApiModelProperty(value = "标题")
     private String title;
 

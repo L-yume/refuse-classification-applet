@@ -8,7 +8,6 @@
  */
 package co.lvyi.bean.admin.dto;
 
-import co.lvyi.bean.admin.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -25,6 +24,8 @@ public class ArticleDTO {
     private String keywords;
     private String abstracts;
     private String content;
+    @ApiModelProperty(value = "正文html")
+    private String htmlContent;
     private Integer isOnTop;
     @ApiModelProperty(value = "文章状态PUBLISHED,DELETED,DRAFT")
     private String status;
