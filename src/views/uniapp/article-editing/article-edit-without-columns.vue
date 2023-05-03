@@ -106,6 +106,7 @@ export default {
         title: '', // 标题
         reprintedFrom: '',
         content: '', // 正文
+        htmlContent: '',
         abstracts: '', // 摘要
         postType: 'POST', // 文章类型
         status: 'DRAFT', // 文章状态
@@ -269,7 +270,7 @@ export default {
 
     // md编辑器内容change事件
     handleEditorChange(value, transToHtml) {
-      this.editDataModel.content = transToHtml
+      this.editDataModel.htmlContent = transToHtml
     },
 
     // 弹出警告错误信息提示，点击确定后关闭窗口方法
@@ -318,7 +319,7 @@ export default {
       this.$refs['dataForm'].validate((valid, errorInfo) => {
         if (valid) {
           if (!this.editDataModel.title && this.editDataModel.content) {
-            let allText = (getTextFormHtml(this.editDataModel.content)).trim()
+            let allText = (getTextFormHtml(this.editDataModel.htmlContent)).trim()
             this.editDataModel.title = allText.length > 100 ? allText.substr(0, 97) + '...' : allText
           }
           this.pubDialogShow = true
