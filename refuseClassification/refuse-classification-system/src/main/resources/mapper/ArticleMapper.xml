@@ -22,6 +22,11 @@
         values (#{title}, #{reprintedFrom}, #{keywords}, #{abstracts}, #{content}, #{htmlContent}, #{attribute}, #{isOnTop}, #{status}, sysdate())
     </insert>
 
+    <update id="updateArticle" parameterType="Article">
+        update articles set reprinted_from = #{reprintedFrom}, content = #{content}, title = #{title}, html_content = #{htmlContent}, attribute = #{attribute}, updated_time = sysdate()
+        where article_id = #{articleId}
+    </update>
+
     <delete id="deleteArticleById" parameterType="Integer">
         delete from articles where article_id = #{article_id}
     </delete>

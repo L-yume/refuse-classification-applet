@@ -30,5 +30,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
     public int addArticle(Article article);
 
     public int deleteArticleById(Integer articleId);
+
+    int updateArticle(Article article);
 }
 

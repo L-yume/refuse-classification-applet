@@ -17,4 +17,6 @@ public interface IArticleService extends IService<Article> {
     int addArticle(ArticleDTO articleDTO);
 
     int deleteArticleById(Integer articleId);
+
+    int updateArticle(ArticleDTO articleDTO);
 }

@@ -18,6 +18,7 @@ import lombok.EqualsAndHashCode;
 @ApiModel(value="文章分页对象", description="文章")
 public class ArticleDTO {
 
+    private Integer articleId;
     private String title;
     private String reprintedFrom;
     @ApiModelProperty(value = "标题关键字")

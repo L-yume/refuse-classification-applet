@@ -167,5 +167,28 @@ public class OssServiceImpl implements IOssService {
         return file;
     }
 
+    @Override
+    public boolean needUpload(String imageUrl) {
+        if (imageUrl.indexOf(ossClient.getEndpoint().getHost()) != -1) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public String upload(String url) {
+        String imgName = ossDirPrefix + FileNameUtil.getImgName(url);
+        try (InputStream inputStream = new URL(url).openStream()) {
+            ossClient.putObject(ossBucketName, imgName, inputStream);
+        } catch (IOException e) {
+
+            log.error("根据外链上传图片到 OSS 出错了：", e);
+
+        }
+        return getImgUrl(imgName);
+    }
+
+
 }
 

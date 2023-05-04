@@ -57,5 +57,11 @@ public class ArticleController extends BaseController {
     public JsonResult delete(@RequestParam(value = "articleId") Integer articleId) {
         return toAjax(articleService.deleteArticleById(articleId));
     }
+
+    @Log(title = "修改文章", businessType = BusinessType.UPDATE)
+    @PutMapping
+    public JsonResult update(@Validated @RequestBody ArticleDTO articleDTO) {
+        return toAjax(articleService.updateArticle(articleDTO));
+    }
 }
 
