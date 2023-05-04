@@ -39,8 +39,8 @@ export function createArticle(data) {
 // 更新文章保存方法
 export function updateArticle(data) {
   return request({
-    url: '/posts/update',
-    method: 'post',
+    url: '/uniapp/article',
+    method: 'put',
     data
   })
 }
