@@ -71,7 +71,7 @@
       <el-table-column label="视频标题" prop="name" :show-overflow-tooltip="true" width="150" />
       <el-table-column label="时长" prop="duration" :show-overflow-tooltip="true" width="150" />
       <el-table-column label="视频大小" prop="videoSize" width="100" />
-      <el-table-column label="视频" align="center" width="100">
+      <el-table-column label="视频" align="center" width="200">
         <template slot-scope="scope">
           <el-button
             type="success"
@@ -301,7 +301,8 @@ export default {
           'video/flv',
           'video/avi',
           'video/wmv',
-          'video/rmvb'
+          'video/rmvb',
+          'video/ts'
         ].indexOf(file.type) === -1
       ) {
         this.$message.error('请上传正确的视频格式')
@@ -344,23 +345,12 @@ export default {
     },
     // 表单重置
     reset() {
-      if (this.$refs.menu != undefined) {
-        this.$refs.menu.setCheckedKeys([]);
-      }
-      this.menuExpand = false,
-        this.menuNodeAll = false,
-        this.deptExpand = true,
-        this.deptNodeAll = false,
+
         this.form = {
-          roleId: undefined,
-          roleName: undefined,
-          roleKey: undefined,
-          roleSort: 0,
-          status: "0",
-          menuIds: [],
-          deptIds: [],
-          menuCheckStrictly: true,
-          deptCheckStrictly: true,
+          videoId: undefined,
+          name: undefined,
+          path: '',
+
           remark: undefined
         };
       this.resetForm("form");
@@ -388,10 +378,10 @@ export default {
 
     /** 新增按钮操作 */
     handleAdd() {
-      //this.reset();
+      this.reset();
       //this.getMenuTreeselect();
       this.open = true;
-      this.title = "添加角色";
+      this.title = "添加视频";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -415,26 +405,8 @@ export default {
       });
     },
 
-    /** 分配数据权限操作 */
-    handleDataScope(row) {
-      this.reset();
-      //const deptTreeSelect = this.getDeptTree(row.roleId);
-      getRole(row.roleId).then(response => {
-        this.form = response.data;
-        this.openDataScope = true;
-        this.$nextTick(() => {
-          deptTreeSelect.then(res => {
-            this.$refs.dept.setCheckedKeys(res.checkedKeys);
-          });
-        });
-        this.title = "分配数据权限";
-      });
-    },
-    /** 分配用户操作 */
-    handleAuthUser: function(row) {
-      const roleId = row.roleId;
-      this.$router.push("/system/role-auth/user/" + roleId);
-    },
+
+
     /** 提交按钮 */
     submitForm: function() {
       this.$refs["form"].validate(valid => {
@@ -469,7 +441,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const videoIds = row.videoId || this.ids;
-      this.$modal.confirm('是否确认删除角色编号为"' + videoIds + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除视频编号为"' + videoIds + '"的数据项？').then(function() {
         return delVideo(videoIds);
       }).then(() => {
         this.getList();
