@@ -212,7 +212,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Override
     public int updateUserProfile(SysUser user) {
-        return 0;
+        return userMapper.updateUser(user);
     }
 
     @Override
