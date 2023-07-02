@@ -49,9 +49,9 @@ aliyun:
     # oss对外服务的访问域名
     endpoint: oss-cn-shenzhen.aliyuncs.com
     # 访问身份验证中用到用户标识
-    accessKeyId: LTAI5t8jihSDUCYrrMqgEX5D
+    accessKeyId:
     # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
-    accessKeySecret: 2wo5VCFNm5qqkV2LgCp1S9wpGGlnvl
+    accessKeySecret:
     # oss的存储空间
     bucketName: test-oss-2023-3-19
     # 上传文件大小(M)
